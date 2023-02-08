@@ -7,6 +7,6 @@ Bishop Oparaugo
 Yi Xhan Lin
 Aric Hoang
 
-Team Name: CTN
+Team Name: 5
 
-Project Name: TBD
+Project Name: NUTRI APP
