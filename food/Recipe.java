@@ -28,6 +28,10 @@ public class Recipe extends Food {
         return ingredients;
     }
 
+    public String getInstructions() {
+        return instructions;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

@@ -48,7 +48,7 @@ public class RecipeTest {
         // setup
         Recipe recipe = new Recipe("test recipe", "test instructions");
         Ingredient ingredient1 = new Ingredient("test ingredient1", 10, 2, 3, 0, 5);
-        Ingredient ingredient2 = new Ingredient("test ingredient1", 10, 2, 3, 0, 5);
+        Ingredient ingredient2 = new Ingredient("test ingredient2", 10, 2, 3, 0, 5);
         recipe.addIngredient(ingredient1, 2);
         recipe.addIngredient(ingredient2, 4);
         int expected = 1;
@@ -67,20 +67,20 @@ public class RecipeTest {
         // setup
         Recipe recipe = new Recipe("test recipe", "test instructions");
         Ingredient ingredient1 = new Ingredient("test ingredient1", 125, 64, 27, 8, 1);
-        Ingredient ingredient2 = new Ingredient("test ingredient1", 25, 16, 9, 4, 1);
-        Ingredient ingredient3 = new Ingredient("test ingredient1", 5, 4, 3, 2, 1);
+        Ingredient ingredient2 = new Ingredient("test ingredient2", 25, 16, 9, 4, 1);
+        Ingredient ingredient3 = new Ingredient("test ingredient3", 5, 4, 3, 2, 1);
         int[] actual = new int[5];
-        int[] expected = new int[] {190, 108, 54, 22, 6};
+        int[] expected = new int[] { 190, 108, 54, 22, 6 };
         // invoke
         recipe.addIngredient(ingredient1, 1);
         recipe.addIngredient(ingredient2, 2);
         recipe.addIngredient(ingredient3, 3);
+        // analyze
         actual[0] = recipe.getCalories();
         actual[1] = recipe.getFat();
         actual[2] = recipe.getProtein();
         actual[3] = recipe.getFiber();
         actual[4] = recipe.getCarbs();
-        // analyze
         assertArrayEquals(expected, actual);
     }
 
@@ -92,23 +92,22 @@ public class RecipeTest {
         // setup
         Recipe recipe = new Recipe("test recipe", "test instructions");
         Ingredient ingredient1 = new Ingredient("test ingredient1", 125, 64, 27, 8, 1);
-        Ingredient ingredient2 = new Ingredient("test ingredient1", 25, 16, 9, 4, 1);
-        Ingredient ingredient3 = new Ingredient("test ingredient1", 5, 4, 3, 2, 1);
+        Ingredient ingredient2 = new Ingredient("test ingredient2", 25, 16, 9, 4, 1);
+        Ingredient ingredient3 = new Ingredient("test ingredient3", 5, 4, 3, 2, 1);
         int[] actual = new int[5];
-        int[] expected = new int[] {65, 44, 27, 14, 5};
+        int[] expected = new int[] { 65, 44, 27, 14, 5 };
         // invoke
         recipe.addIngredient(ingredient1, 1);
         recipe.addIngredient(ingredient2, 2);
         recipe.addIngredient(ingredient3, 3);
         recipe.removeIngredient(ingredient1);
+        // analyze
         actual[0] = recipe.getCalories();
         actual[1] = recipe.getFat();
         actual[2] = recipe.getProtein();
         actual[3] = recipe.getFiber();
         actual[4] = recipe.getCarbs();
-        // analyze
         assertArrayEquals(expected, actual);
     }
-
 
 }
