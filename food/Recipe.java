@@ -14,7 +14,7 @@ public class Recipe extends Food {
 
     /**
      * hash map where the keys are the ingredients and the values are the how many
-     * times that ingredient is used in the recipe
+     * times that ingredient is used in the recipe aka the quantity
      */
     private HashMap<Ingredient, Integer> ingredients;
 
@@ -41,26 +41,6 @@ public class Recipe extends Food {
     }
 
     /**
-     * updates the calories, fat, fiber, protein, and carbs fields as changes are
-     * made to the ingredients
-     */
-    private void updateRecipeInfo() {
-        calories = 0;
-        fat = 0;
-        fiber = 0;
-        protein = 0;
-        carbs = 0;
-        for (Ingredient i : ingredients.keySet()) {
-            int quantity = ingredients.get(i);
-            calories += i.getCalories() * quantity;
-            fat += i.getFat() * quantity;
-            fiber += i.getFiber() * quantity;
-            protein += i.getProtein() * quantity;
-            carbs += i.getCarbs() * quantity;
-        }
-    }
-
-    /**
      * adds an ingredient and associated quantity to the recipes ingredients
      * then updates recipe info
      * 
@@ -70,7 +50,11 @@ public class Recipe extends Food {
     public void addIngredient(Ingredient ingredient, int quantity) {
         if (quantity > 0) {
             ingredients.put(ingredient, quantity);
-            updateRecipeInfo();
+            calories += ingredient.getCalories() * quantity;
+            fat += ingredient.getFat() * quantity;
+            fiber += ingredient.getFiber() * quantity;
+            protein += ingredient.getProtein() * quantity;
+            carbs += ingredient.getCarbs() * quantity;
         }
     }
 
@@ -81,8 +65,13 @@ public class Recipe extends Food {
      * @param ingredient Ingredient object
      */
     public void removeIngredient(Ingredient ingredient) {
+        int quantity = ingredients.get(ingredient);
         ingredients.remove(ingredient);
-        updateRecipeInfo();
+        calories -= ingredient.getCalories() * quantity;
+        fat -= ingredient.getFat() * quantity;
+        fiber -= ingredient.getFiber() * quantity;
+        protein -= ingredient.getProtein() * quantity;
+        carbs -= ingredient.getCarbs() * quantity;
     }
 
 }

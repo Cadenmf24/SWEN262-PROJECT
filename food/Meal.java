@@ -30,25 +30,6 @@ public class Meal extends Food {
     }
 
     /**
-     * updates the calories, fat, fiber, protein, and carbs fields as changes are
-     * made to the recipes
-     */
-    private void updateMealInfo() {
-        calories = 0;
-        fat = 0;
-        fiber = 0;
-        protein = 0;
-        carbs = 0;
-        for (Recipe r : recipes) {
-            calories += r.getCalories();
-            fat += r.getFat();
-            fiber += r.getFiber();
-            protein += r.getProtein();
-            carbs += r.getCarbs();
-        }
-    }
-
-    /**
      * adds a recipe to the list of recipes
      * then updates meal info
      * 
@@ -57,7 +38,11 @@ public class Meal extends Food {
      */
     public void addRecipe(Recipe recipe) {
         recipes.add(recipe);
-        updateMealInfo();
+        calories += recipe.getCalories();
+        fat += recipe.getFat();
+        fiber += recipe.getFiber();
+        protein += recipe.getProtein();
+        carbs += recipe.getCarbs();
     }
 
     /**
@@ -69,7 +54,11 @@ public class Meal extends Food {
      */
     public void removeRecipe(Recipe recipe) {
         recipes.remove(recipe);
-        updateMealInfo();
+        calories -= recipe.getCalories();
+        fat -= recipe.getFat();
+        fiber -= recipe.getFiber();
+        protein -= recipe.getProtein();
+        carbs -= recipe.getCarbs();
     }
 
 }
