@@ -1,4 +1,6 @@
 package History;
+
+//Still don't know what to do with this class tbh
 public class DataInput {
     //State state;
     int weight;

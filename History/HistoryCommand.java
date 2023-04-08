@@ -1,8 +1,8 @@
 package History;
-public interface HistoryCommand {
-    
-    
-    public void execute();
 
-    public void undo();
+// Defines the Command interface
+public interface HistoryCommand {
+    void execute();
+    void undo();
+    String getData();
 }
