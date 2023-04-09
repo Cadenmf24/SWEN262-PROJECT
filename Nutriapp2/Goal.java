@@ -3,9 +3,9 @@ package Nutriapp2;
 
 public class Goal{
 
-    private GoalState state = new LoseWeight();
+    private GoalState state;
 
-    public void setGoatType(GoalState state){
+    public void setGoalType(GoalState state){
         this.state = state;
     }
 
@@ -13,7 +13,7 @@ public class Goal{
         return this.state;
     }
 
-    public void printGoal(){
-        state.printGoal();
+    public String toString(){
+        return state.toString();
     }
 }

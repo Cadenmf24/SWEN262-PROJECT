@@ -3,9 +3,8 @@ package Nutriapp2;
 public class MaintainWeight implements GoalState{
 
     @Override
-    public void printGoal() {
-        System.out.println("Maintaining Weight...");
-        throw new UnsupportedOperationException("Unimplemented method 'printGoal'");
+    public String toString() {
+        return "Goal is set to [Maintaining Weight]";
     }
 
     @Override
@@ -18,6 +17,12 @@ public class MaintainWeight implements GoalState{
     public void handleWeightLoss() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleWeightLoss'");
+    }
+
+    @Override
+    public void setGoal(GoalState goalState) {
+        goalState.setGoal(this);
+        throw new UnsupportedOperationException("Unimplemented method 'setGoal'");
     }
     
 }
