@@ -1,7 +1,7 @@
 package Observer;
 
 public interface Component {
-    void register();
-    void deregister();
-    void notifyListener();
+    void register(Goal g);
+    void deregister(Goal g);
+    void notifyListener(UserEvent userEvent);
 }
