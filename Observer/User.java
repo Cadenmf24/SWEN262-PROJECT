@@ -18,7 +18,9 @@ public class User implements Component{
 
     @Override
     public void notifyListener(UserEvent userEvent) {
-    
+        for(Goal g: goals){
+            g.userChanged(userEvent);
+        }
     }
     
 }
