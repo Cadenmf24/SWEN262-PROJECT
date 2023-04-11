@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+//Having trouble refering to the ingredient manager in guest so that each sting line is added to the list<String> ingredients
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
@@ -42,6 +42,7 @@ public class CSVDataImporter implements DatabaseImporter{
         for (int i = 0; i < columnsToKeep.size(); i++) {
             int columnIndex = columnsToKeep.get(i);
             trimmedLine[i] = line[columnIndex];
+            //addIngredient(trimmedLine[i]);
         }
         return trimmedLine;
     }
