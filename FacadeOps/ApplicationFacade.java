@@ -32,11 +32,19 @@ public class ApplicationFacade {
     }
 
     public void login(String username, String password) {
-        sessionManager.login(username, password);
+        try {
+            sessionManager.login(username, password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void logout() {
-        sessionManager.logout();
+        try {
+            sessionManager.logout(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void accessAllFeatures() {

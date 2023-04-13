@@ -7,12 +7,20 @@ import java.util.Set;
 
 public class UserManager {
     private Set<String> usernames = new HashSet<>();
-    private Map<String, String> users = new HashMap<>();
+    private static Map<String, String> users = new HashMap<>();
     private Map<String, Set<String>> teamRequestsMap = new HashMap<>();
     private Map<String, Set<String>> userTeams = new HashMap<>();
     private Map<String, String> teams = new HashMap<>();
 
-
+    //public UserManager(){
+        //this.users = new HashMap<>();
+    //}
+    public static boolean authenticate(String username, String password) {
+        if (!users.containsKey(username)) {
+            return false; // username not found
+        }
+        return users.get(username).equals(password); // check if password matches
+    }
     public void register(String username, String password) {
         // registers the user with the given username and password
         if (username == null || username.isEmpty()) {
