@@ -7,8 +7,8 @@ public class Teams implements TeamOptions{
     private ArrayList<Users> invited_users;
     private boolean active_challenge = false;
     private String current_challenge;
-    private HashMap<User, Integer > challenge_progress;
-    
+    private HashMap<User, Integer> challenge_progress;
+    private HashMap<User, ArrayList<Workout>> team_workouts;
 
     @Override
     public void joinTeam(User user) {
@@ -43,7 +43,7 @@ public class Teams implements TeamOptions{
     }
 
     @Override
-    public void logWorkout() {
+    public void logWorkout(Workout ) {
         // based on implementation of workout, Teams may have an arraylist of team members' workouts, and this would add to that list
         // also would update challenge progress if there is an active challenge
     }
@@ -64,7 +64,7 @@ public class Teams implements TeamOptions{
         }
         else{
             this.active_challenge = true;
-            this.current_challenge = "Active challenge of " + minutes.toString() + "minutes this week.";
+            this.current_challenge = "Active challenge of " + minutes.toString() + " minutes this week.";
         }
     }
 
