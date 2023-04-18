@@ -1,3 +1,5 @@
+package teamThings;
+
 import UserProfile.User;
 import Workout.Workout;
 
@@ -9,7 +11,7 @@ public interface TeamOptions {
     public void viewHistory(User user);
     public void logWorkout(User user, Workout workout);
 
-    public void sendNotification();
+    public void sendNotification(User user, Workout workout);
 
     public void setChallenge(Integer minutes);
     public void viewRanking();

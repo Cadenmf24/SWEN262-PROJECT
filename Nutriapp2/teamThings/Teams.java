@@ -1,3 +1,5 @@
+package teamThings;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,7 +47,7 @@ public class Teams implements TeamOptions{
     public void sendInvite(User sender, User receiver) {
         if(team_members.contains(sender)){
             this.invited_users.add(receiver);
-            //sends notification to receiver that they have received a team invite
+            receiver.notify("You have been invited to " + this.team_name + " by " + sender.getCurrentName());
         }
         else{
             System.out.println("You are not in a team! Join a team to invite others.");
@@ -71,15 +73,14 @@ public class Teams implements TeamOptions{
                 Integer minutes = this.challenge_progress.get(user);
                 minutes += workout.get_minutes(); 
             }
-            //notify team about team member logging a workout
+            sendNotification(user, workout);
         } 
     }
 
     @Override
-    public void sendNotification() {
+    public void sendNotification(User user, Workout workout) {
         for (User curr_user : team_members) {
-            //sends notification to each team member
-            // will be called by logWorkout
+            curr_user.notify(user.getCurrentName() + " has logged a workout for " + workout.get_minutes() + " minutes on " + workout.getDate());
         }
     }
 

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import teams.Teams;
+import teamThings.Teams;
 import State.Goal;
 import State.GoalState;
 import Workout.Workout;
@@ -28,6 +28,7 @@ public class User {
     private Stack<Double> weights = new Stack<>();
     private Teams team = null;
     private ArrayList<Workout> workouts = new ArrayList<>();
+    private ArrayList<String> notifications = new ArrayList<>();
 
 
     public User(String name, int height, double weight, Date birthdate) {
@@ -121,6 +122,9 @@ public class User {
         WorkoutFactory workout_factory = new WorkoutFactory();
         Workout workout =  workout_factory.createWorkout(type, intensity);
         this.workouts.add(workout);
+    }
+    public void notify(String message){
+        this.notifications.add(message);
     }
 
 /*
