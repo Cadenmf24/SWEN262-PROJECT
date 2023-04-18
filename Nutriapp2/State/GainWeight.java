@@ -1,25 +1,17 @@
 package Nutriapp2.State;
 
+import UserProfile.User;
+
 public class GainWeight implements GoalState{
 
-    @Override
-    public String toString() {
-        return "Goal Set to [GainWeight]";
+    public void setGoal(User user) {
+        int targetCalories = calculateGainCalories(user);
+        user.setTargetCalories(targetCalories);
+        System.out.println("Gain weight goal set.");
     }
-
-    @Override
-    public void handleWeightGain() {
-        // TODO Auto-generated method stub
+    private int calculateGainCalories(User user) {
+        int bmr = (int) (10 * user.getCurrentWeight() + 6.25 * user.getCurrentHeight() - 5 * user.calculateAge());
+        return (int) (bmr * 1.2) + 500;
+        // Calculate target calories to gain weight
     }
-
-    @Override
-    public void handleWeightLoss() {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void setGoal(GoalState goalState) {
-        goalState.setGoal(this);
-    }
-    
 }

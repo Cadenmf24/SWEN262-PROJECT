@@ -7,6 +7,7 @@ import java.util.List;
 //Having trouble refering to the ingredient manager in guest so that each sting line is added to the list<String> ingredients
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import food.Ingredient;
 
 public class CSVDataImporter implements DatabaseImporter{
     @Override
@@ -39,10 +40,14 @@ public class CSVDataImporter implements DatabaseImporter{
     }
     private static String[] trimLine(String[] line, List<Integer> columnsToKeep) {
         String[] trimmedLine = new String[columnsToKeep.size()];
+        ArrayList<Ingredient> ingredients = new ArrayList<>(null);
         for (int i = 0; i < columnsToKeep.size(); i++) {
             int columnIndex = columnsToKeep.get(i);
             trimmedLine[i] = line[columnIndex];
-            //addIngredient(trimmedLine[i]);
+            String ing_Name = trimmedLine[i];
+            //need help fixing this line so that the ingredients are addded to the array list for user searches
+            Ingredient ingredient = new Ingredient(ing_Name, columnIndex, columnIndex, columnIndex, columnIndex, columnIndex);
+            ingredients.add(ingredient);
         }
         return trimmedLine;
     }

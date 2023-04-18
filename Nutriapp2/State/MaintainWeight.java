@@ -1,28 +1,16 @@
 package Nutriapp2.State;
 
-public class MaintainWeight implements GoalState{
+import UserProfile.User;
 
-    @Override
-    public String toString() {
-        return "Goal is set to [Maintaining Weight]";
+class MaintainWeight implements GoalState {
+    public void setGoal(User user) {
+        int targetCalories = calculateMaintainCalories(user);
+        user.setTargetCalories(targetCalories);
+        System.out.println("Maintain weight goal set.");
     }
 
-    @Override
-    public void handleWeightGain() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleWeightGain'");
+    private int calculateMaintainCalories(User user) {    
+        int bmr = (int) (10 * user.getCurrentWeight() + 6.25 * user.getCurrentHeight() - 5 * user.calculateAge());
+        return (int) (bmr * 1.2);
     }
-
-    @Override
-    public void handleWeightLoss() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleWeightLoss'");
-    }
-
-    @Override
-    public void setGoal(GoalState goalState) {
-        goalState.setGoal(this);
-        throw new UnsupportedOperationException("Unimplemented method 'setGoal'");
-    }
-    
 }
