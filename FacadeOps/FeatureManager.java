@@ -48,7 +48,7 @@ public class FeatureManager {
         }
     }
     
-    public void enterUserStats() throws ParseException {
+    public User enterUserStats() throws ParseException {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
@@ -96,7 +96,7 @@ public class FeatureManager {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Search for an ingredient: ");
         String query = scanner.nextLine();
-        ArrayList<Ingredient> ingredient = database.searchIngredients(query);
+        Ingredient ingredient = database.searchIngredients(query);
         if (ingredient == null) {
             System.out.println("No results found.");
         } else {

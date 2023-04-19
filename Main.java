@@ -4,15 +4,14 @@ import java.util.Scanner;
 import Database.Database;
 import FacadeOps.FeatureManager;
 import UserProfile.User;
-
+import java.io.*;
 public class Main {
 
-    private static final String SAVE_FILE_NAME = "user_data.txt";
-
-    public static void main(String[] args) {
-
+    //private static final String SAVE_FILE_NAME = "user_data.txt";
+    public static void main(String[] args) throws IOException{
+        File SAVE_FILE_NAME = new File("user_data.txt");
         // Initialize the app
-        User user = null;
+        User user;
         FeatureManager featureManager = null;
         Database database = null;
 
@@ -24,13 +23,28 @@ public class Main {
             System.out.println("Failed to load saved data. Creating new user and database.");
         }
 
-        if (user == null) {
+        if (user == null && database == null) {
             user = new User(null, 0, 0, null);
-        }
-
-        if (database == null) {
             database = new Database();
         }
+        
+        else if (SAVE_FILE_NAME.exists()) {
+            user = new User(SAVE_FILE_NAME);
+            database = new Database();
+        }
+
+        /*// Display the user's profile
+        System.out.println("Name: " + user.getCurrentName());
+        System.out.println("Height: " + user.getCurrentHeight());
+        System.out.println("Weight: " + user.getWeight());
+
+        // Update the user's profile
+        user.setName("Tom");
+        user.setHeight(400);
+        user.setWeight(125.05);
+*/
+        // Save the user's profile to a file
+        user.saveToFile(SAVE_FILE_NAME);
 
         featureManager = new FeatureManager(user, database);
 

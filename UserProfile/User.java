@@ -1,5 +1,11 @@
 package UserProfile;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 //import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,32 +41,15 @@ public class User {
         this.stock = new HashMap<Ingredient, Double>();
     }
 
-    public int calculateAge() {
-        Calendar today = Calendar.getInstance();
-        Calendar birthdateCalendar = Calendar.getInstance();
-        birthdateCalendar.setTime(birthdate);
-        int age = today.get(Calendar.YEAR) - birthdateCalendar.get(Calendar.YEAR);
-        if (today.get(Calendar.DAY_OF_YEAR) < birthdateCalendar.get(Calendar.DAY_OF_YEAR)) {
-            age--;
-        }
-        return age;
+    public User(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        this.name = reader.readLine();
+        this.height = Integer.parseInt(reader.readLine());
+        this.weight = Double.parseDouble(reader.readLine());
+        reader.close();
     }
-
-    public void addWeight(double weight) {
-        weights.push(weight);
-    }
-
-    public double getPreviousWeight() {
-        if (weights.size() < 2) {
-            System.out.println("No previous weight recorded");
-            return 0.0;
-        } else {
-            weights.pop(); // pop the current weight
-            double previousWeight = weights.peek();
-            System.out.println("Previous weight: " + previousWeight);
-            return previousWeight;
-        }
-    }
+    
+    
     public void setTargetCalories(int cal) {
         this.targetCaloriesPerDay = cal;
     }
@@ -90,63 +79,44 @@ public class User {
         return weight;
     }
 
-/*
-    
-    public void checkWeightChange(double currentWeight) {
-        double previousWeight = 70.0; // assume this is the previously inputted weight
-    
-        if (currentWeight != previousWeight) {
-            System.out.println("Weight has been changed from " + previousWeight + " to " + currentWeight);
-            handleWeightChange(100);
+    // Save the user profile to a file
+    public void saveToFile(File file) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+        writer.write(name);
+        writer.newLine();
+        writer.write(Integer.toString(height));
+        writer.newLine();
+        writer.write(Double.toString(weight));
+        writer.close();
+    }
+
+    public int calculateAge() {
+        Calendar today = Calendar.getInstance();
+        Calendar birthdateCalendar = Calendar.getInstance();
+        birthdateCalendar.setTime(birthdate);
+        int age = today.get(Calendar.YEAR) - birthdateCalendar.get(Calendar.YEAR);
+        if (today.get(Calendar.DAY_OF_YEAR) < birthdateCalendar.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+        return age;
+    }
+
+
+    public void addWeight(double weight) {
+        weights.push(weight);
+    }
+
+    public double getPreviousWeight() {
+        if (weights.size() < 2) {
+            System.out.println("No previous weight recorded");
+            return 0.0;
         } else {
-            System.out.println("Weight is unchanged at " + currentWeight);
+            weights.pop(); // pop the current weight
+            double previousWeight = weights.peek();
+            System.out.println("Previous weight: " + previousWeight);
+            return previousWeight;
         }
     }
-    public void setGoal(Goal goal) {
-        this.goal = goal;
-        updateTargetCaloriesPerDay();
-    }
-
-    public void setTargetCalories(int cal) {
-        this.targetCaloriesPerDay = cal;
-        //updateTargetCaloriesPerDay();
-    }
-
-    private int calculateTargetCaloriesPerDay() {
-        int bmr = (int) (10 * weight + 6.25 * height - 5 * calculateAge());
-        switch (goal) {
-            case LOSE:
-                return (int) (bmr * 1.2) - 500;
-            case GAIN:
-                return (int) (bmr * 1.2) + 500;
-            case MAINTAIN:
-            default:
-                return (int) (bmr * 1.2);
-        }
-    }
-
-    public void updateTargetCaloriesPerDay() {
-        this.targetCaloriesPerDay = calculateTargetCaloriesPerDay();
-    }
-
-    public void addExercise(int duration, ExerciseIntensity intensity) {
-        int caloriesBurned = calculateCaloriesBurned(duration, intensity);
-        this.exercisePerDay += duration;
-        this.targetCaloriesPerDay -= caloriesBurned;
-    }
-
-    private int calculateCaloriesBurned(int duration, ExerciseIntensity intensity) {
-        switch (intensity) {
-            case LIGHT:
-                return (int) (duration * weight * 3.5 / 200);
-            case MODERATE:
-                return (int) (duration * weight * 5 / 200);
-            case VIGOROUS:
-            default:
-                return (int) (duration * weight * 7 / 200);
-        }
-    }
-    */
     public void addIngredientToStock(Ingredient ingredient, double amount) {
         if (stock.containsKey(ingredient)) {
             amount += stock.get(ingredient);
