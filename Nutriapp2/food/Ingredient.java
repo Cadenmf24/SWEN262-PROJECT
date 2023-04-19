@@ -19,4 +19,16 @@ public class Ingredient extends Food implements IngredientElement{
     public int accept(ShoppingCartVisitor visitor) {
         return visitor.visit(this);
     }
+
+    public String getUnit() {
+        return null;
+    }
+
+    public double getPricePerUnit() {
+        return 0;
+    }
+
+    public Double getBaseAmount() {
+        return null;
+    }
 }

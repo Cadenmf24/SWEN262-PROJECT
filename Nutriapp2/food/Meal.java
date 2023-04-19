@@ -61,4 +61,8 @@ public class Meal extends Food {
         carbs -= recipe.getCarbs();
     }
 
+    public Integer getServings() {
+        return null;
+    }
+
 }

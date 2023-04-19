@@ -73,5 +73,4 @@ public class Recipe extends Food {
         protein -= ingredient.getProtein() * quantity;
         carbs -= ingredient.getCarbs() * quantity;
     }
-
 }

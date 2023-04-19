@@ -2,7 +2,7 @@ package Nutriapp2.State;
 
 
 public interface GoalState{
-
+    
     public void setGoal(GoalState goalState);
 
     public String toString();
