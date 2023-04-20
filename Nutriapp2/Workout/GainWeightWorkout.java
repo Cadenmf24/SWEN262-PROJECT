@@ -1,4 +1,4 @@
-package Workout;
+package Nutriapp2.Workout;
 import java.util.Random;
 import java.time.LocalDate;
  

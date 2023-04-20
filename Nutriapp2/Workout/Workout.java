@@ -1,4 +1,4 @@
-package Workout;
+package Nutriapp2.Workout;
 
 public interface Workout {
 

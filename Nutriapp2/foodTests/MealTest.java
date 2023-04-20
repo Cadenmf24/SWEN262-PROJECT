@@ -1,4 +1,4 @@
-package foodTests;
+package Nutriapp2.foodTests;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;

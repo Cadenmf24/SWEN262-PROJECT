@@ -1,6 +1,6 @@
-package FacadeOps;
+package Nutriapp2.FacadeOps;
 
-import food.Recipe;
+import Nutriapp2.food.Recipe;
 
 public class RecipeManager{
     public void addRecipe(Recipe recipe){

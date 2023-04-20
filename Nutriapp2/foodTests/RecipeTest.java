@@ -1,4 +1,4 @@
-package foodTests;
+package Nutriapp2.foodTests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.annotation.Testable;
 
-import food.Ingredient;
-import food.Recipe;
+import Nutriapp2.food.Ingredient;
+import Nutriapp2.food.Recipe;
 
 @Testable
 /**

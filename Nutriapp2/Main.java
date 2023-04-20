@@ -5,17 +5,11 @@ import java.util.Scanner;
 
 import com.opencsv.exceptions.CsvValidationException;
 
-import Database.CSVDataImporter;
+import Nutriapp2.Database.CSVDataImporter;
 //import Database.Database;
-import FacadeOps.CommandManager;
-import FacadeOps.FeatureManager;
-import FacadeOps.RecipeManager;
-import FacadeOps.SessionManager;
-import FacadeOps.HistoryManager;
-import FacadeOps.Pair;
-import FacadeOps.UserManager;
-import GuestMode.IngredientManager;
-import UserProfile.User;
+import Nutriapp2.FacadeOps.*;
+import Nutriapp2.GuestMode.IngredientManager;
+import Nutriapp2.UserProfile.User;
 
 public class Main {
     private User currentUser;

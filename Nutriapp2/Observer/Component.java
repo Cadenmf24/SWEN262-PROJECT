@@ -1,4 +1,4 @@
-package Observer;
+package  Nutriapp2.Observer;
 
 public interface Component {
     void register(Goal g);

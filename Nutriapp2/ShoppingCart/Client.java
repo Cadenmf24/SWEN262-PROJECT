@@ -1,6 +1,6 @@
-package ShoppingCart;
+package Nutriapp2.ShoppingCart;
 
-import food.Ingredient;
+import Nutriapp2.food.Ingredient;
 
 public class Client {
     //Once we have exported the csv file I can include the parameters to test

@@ -1,8 +1,8 @@
-package GuestMode;
+package Nutriapp2.GuestMode;
 
 import java.util.List;
 
-import food.Ingredient;
+import Nutriapp2.food.Ingredient;
 
 //Needs the food feature code to be pulleed so I can reference both the ingredient and database class
 public class IngredientManager implements Inventory{

@@ -1,7 +1,7 @@
-package food;
+package Nutriapp2.food;
 
-import ShoppingCart.IngredientElement;
-import ShoppingCart.ShoppingCartVisitor;
+import Nutriapp2.ShoppingCart.IngredientElement;
+import Nutriapp2.ShoppingCart.ShoppingCartVisitor;
 
 /**
  * child class of Food that defines state and behavior for an ingredient, acts
