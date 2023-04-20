@@ -1,6 +1,7 @@
-package Nutriapp2.FacadeOps;
+package FacadeOps;
 
 import java.util.*;
+
 //import FacadeOps.UserManager;
 public class SessionManager {
 
@@ -16,12 +17,15 @@ public class SessionManager {
         if (!UserManager.authenticate(username, password)) {
             throw new Exception("Invalid username or password");
         }
+        return generateSessionKey(username);
+    }
+    public String generateSessionKey(String username){
         // generate session key and store it in the map of sessions
         String sessionKey = UUID.randomUUID().toString();
         sessions.put(sessionKey, username);
+        System.out.println(sessionKey);
         return sessionKey;
     }
-    
     // logs out a user with the given session key
     public void logout(String sessionKey) throws Exception {
         // Check if the session key exists in the sessions HashMap

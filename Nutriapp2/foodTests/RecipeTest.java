@@ -1,13 +1,14 @@
-package Nutriapp2.foodTests;
+package foodTests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.annotation.Testable;
 
-import Nutriapp2.food.Ingredient;
-import Nutriapp2.food.Recipe;
+import food.Ingredient;
+import food.Recipe;
 
 @Testable
 /**

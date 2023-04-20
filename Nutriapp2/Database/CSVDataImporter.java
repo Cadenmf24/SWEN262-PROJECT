@@ -1,4 +1,4 @@
-package Nutriapp2.Database;
+package Database;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,11 +7,15 @@ import java.util.List;
 //Having trouble refering to the ingredient manager in guest so that each sting line is added to the list<String> ingredients
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
+
+import GuestMode.IngredientManager;
+import food.Ingredient;
 
 public class CSVDataImporter implements DatabaseImporter{
     @Override
-    public void importData(String fileName) {
-        String updatedcsvFile = "data.csv";
+    public void importData(String fileName) throws CsvValidationException {
+        String updatedcsvFile = "Database/data.csv";
 
         List<Integer> columnsToKeep = new ArrayList<>();
         columnsToKeep.add(0);  // Keep column NDB_No (id)
@@ -42,7 +46,10 @@ public class CSVDataImporter implements DatabaseImporter{
         for (int i = 0; i < columnsToKeep.size(); i++) {
             int columnIndex = columnsToKeep.get(i);
             trimmedLine[i] = line[columnIndex];
-            //addIngredient(trimmedLine[i]);
+            Ingredient ingredient = IngredientConverter.convertStringToIngredient(trimmedLine[i]);
+            List<Ingredient> list = new ArrayList<Ingredient>();
+            IngredientManager Manager = new IngredientManager(list);
+            Manager.addIngredient(ingredient);
         }
         return trimmedLine;
     }

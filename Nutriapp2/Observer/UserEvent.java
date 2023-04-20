@@ -1,4 +1,4 @@
-package Nutriapp2.Observer;
+package Observer;
 
 public class UserEvent {
     private int weight, caloriesEaten; 

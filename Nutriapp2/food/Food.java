@@ -1,4 +1,4 @@
-package Nutriapp2.food;
+package food;
 
 /**
  * abstract class that defines state and behavior for food items, acts as the

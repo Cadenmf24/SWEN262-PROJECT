@@ -1,4 +1,4 @@
-package Nutriapp2.Extra;
+package Extra;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

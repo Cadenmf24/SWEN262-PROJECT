@@ -1,23 +1,28 @@
-package Nutriapp2.Command;
+package Command;
 
-import Nutriapp2.food.Ingredient;
-
+import food.Ingredient;
+import food.InsufficientQuantityException;
+import food.Stock;
 public class AddIngredientCommand implements Command {
-    private Stock stock;
+    private Stock stock = new Stock();
     private Ingredient ingredient;
-    
-    public AddIngredientCommand(Stock stock, Ingredient ingredient) {
-        this.stock = stock;
+    private int amount;
+    public AddIngredientCommand(Ingredient ingredient, int amount) {
         this.ingredient = ingredient;
+        this.amount = amount;
     }
     
     public void execute() {
-        // Add the ingredient to the stock
-        stock.addIngredient(ingredient);
+        // Stock up the ingredient
+        stock.addIngredient(ingredient, amount);
     }
     
     public void undo() {
-        // Remove the ingredient from the stock
-        stock.removeIngredient(ingredient);
+        // Reduce the stock of ingredient
+        try {
+            stock.removeIngredient(ingredient, amount);
+        } catch (InsufficientQuantityException e) {
+            e.printStackTrace();
+        }
     }
 }

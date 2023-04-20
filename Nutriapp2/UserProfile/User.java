@@ -1,4 +1,4 @@
-package Nutriapp2.UserProfile;
+package UserProfile;
 
 
 import java.io.BufferedReader;
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+
 import Nutriapp2.Command.AddTeamMemberCommand;
 import Nutriapp2.Command.Command;
 import Nutriapp2.Command.EnterDailyWeightCommand;
@@ -23,6 +24,7 @@ import Nutriapp2.food.Ingredient;
 import Nutriapp2.food.Meal;
 import Workout.*;
 import teamThings.*;
+
 
 public class User {
     private String name;
@@ -168,6 +170,9 @@ public class User {
 
     public void addWeight(double weight) {
         weights.push(weight);
+    }
+    public String toString() {
+        return "Username= '" + name + "'";
     }
 
     public double getPreviousWeight() {

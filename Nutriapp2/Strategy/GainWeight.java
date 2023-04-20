@@ -1,4 +1,4 @@
-package Nutriapp2.Strategy;
+package Strategy;
 
 public class GainWeight implements StrategyGoal{
 

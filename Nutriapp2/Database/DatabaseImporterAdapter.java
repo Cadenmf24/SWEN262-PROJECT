@@ -1,4 +1,4 @@
-package Nutriapp2.Database;
+package Database;
 
 public interface DatabaseImporterAdapter {
     void importData(String fileName);
