@@ -1,4 +1,4 @@
-package Nutriapp2.food;
+package food;
 
 import java.util.ArrayList;
 

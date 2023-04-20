@@ -1,4 +1,4 @@
-package Nutriapp2.FacadeOps;
+package FacadeOps;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,9 +12,8 @@ public class UserManager {
     private Map<String, Set<String>> userTeams = new HashMap<>();
     private Map<String, String> teams = new HashMap<>();
 
-    //public UserManager(){
-        //this.users = new HashMap<>();
-    //}
+
+    
     public static boolean authenticate(String username, String password) {
         if (!users.containsKey(username)) {
             return false; // username not found

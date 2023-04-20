@@ -1,4 +1,4 @@
-package Nutriapp2.GuestMode;
+package GuestMode;
 
 import java.util.List;
 

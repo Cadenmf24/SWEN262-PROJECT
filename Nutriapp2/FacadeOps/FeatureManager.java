@@ -1,4 +1,4 @@
-package Nutriapp2.FacadeOps;
+package FacadeOps;
 
 
 import java.text.ParseException;
@@ -11,15 +11,15 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 
-import Nutriapp2.Command.HistoryCommand;
-import Nutriapp2.Database.*;
-import Nutriapp2.State.Goal;
-import Nutriapp2.State.GoalState;
-import Nutriapp2.State.MaintainWeight;
-import Nutriapp2.UserProfile.User;
-import Nutriapp2.Workout.WorkoutFactory;
-import Nutriapp2.food.*;
-import Nutriapp2.Workout.*;;
+//import Command.HistoryCommand;
+import Database.*;
+import State.Goal;
+import State.GoalState;
+import State.MaintainWeight;
+import UserProfile.User;
+import Workout.WorkoutFactory;
+import food.*;
+import Workout.*;;
 
 public class FeatureManager {
     private User user;

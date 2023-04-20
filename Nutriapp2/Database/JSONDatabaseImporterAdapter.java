@@ -1,4 +1,4 @@
-package Nutriapp2.Database;
+package Database;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.opencsv.exceptions.CsvValidationException;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -26,7 +27,11 @@ public class JSONDatabaseImporterAdapter implements DatabaseImporterAdapter{
         // Code to convert JSON file to CSV file
         String csvFileName = convertToCSV(fileName);
         // Use the CSVDataImporter to import the data
-        dataImporter.importData(csvFileName);
+        try {
+            dataImporter.importData(csvFileName);
+        } catch (CsvValidationException e) {
+            e.printStackTrace();
+        }
     }
 
     private String convertToCSV(String fileName) {
@@ -70,5 +75,6 @@ public class JSONDatabaseImporterAdapter implements DatabaseImporterAdapter{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return outputFilename;
     }
 }

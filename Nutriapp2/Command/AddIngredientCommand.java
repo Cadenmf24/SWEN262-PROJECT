@@ -1,6 +1,6 @@
-package Nutriapp2.Command;
+package Command;
 
-import Nutriapp2.food.Ingredient;
+import food.Ingredient;
 
 public class AddIngredientCommand implements Command {
     private Stock stock;

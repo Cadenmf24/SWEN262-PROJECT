@@ -1,4 +1,4 @@
-package Nutriapp2.FacadeOps;
+package FacadeOps;
 
 public class ApplicationFacade {
     private UserManager userManager;

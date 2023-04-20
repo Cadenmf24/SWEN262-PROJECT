@@ -1,4 +1,4 @@
-package Nutriapp2.Observer;
+package Observer;
 public interface UserListener {
     
     void userChanged(UserEvent event);

@@ -1,7 +1,9 @@
-package Nutriapp2.Database;
+package Database;
+
+import com.opencsv.exceptions.CsvValidationException;
 
 public class Client {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CsvValidationException {
 
         //CSV
 
