@@ -15,7 +15,7 @@ import food.Ingredient;
 public class CSVDataImporter implements DatabaseImporter{
     @Override
     public void importData(String fileName) throws CsvValidationException {
-        String updatedcsvFile = "data.csv";
+        String updatedcsvFile = "Database/data.csv";
 
         List<Integer> columnsToKeep = new ArrayList<>();
         columnsToKeep.add(0);  // Keep column NDB_No (id)

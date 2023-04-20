@@ -2,6 +2,10 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 import java.util.Scanner;
+
+import com.opencsv.exceptions.CsvValidationException;
+
+import Database.CSVDataImporter;
 //import Database.Database;
 import FacadeOps.CommandManager;
 import FacadeOps.FeatureManager;
@@ -25,8 +29,10 @@ public class Main {
     public CommandManager commandManager = new CommandManager();
     public IngredientManager ingredientManager = new IngredientManager(null);
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, CsvValidationException{
         Main tracker = new Main();
+        CSVDataImporter csvDataImporter = new CSVDataImporter(); // Create the Adaptee object
+        csvDataImporter.importData("ingredients.csv"); // Call the importData method on the Adapter
         tracker.run();
     }
     public void run() {
@@ -43,7 +49,8 @@ public class Main {
         System.out.println("Welcome to NutritionTracker!");
         System.out.println("1. Login");
         System.out.println("2. Register");
-        System.out.println("3. Quit");
+        System.out.println("3. BrowseStock");
+        System.out.println("4. Quit");
         int choice = scanner.nextInt();
         scanner.nextLine();
         switch (choice) {
@@ -72,6 +79,7 @@ public class Main {
         try {
             UserManager.authenticate(username, password);
             sessionManager.login(username, password);
+            currentUser = new User(username, 0, 0, null);
         } catch (Exception e) {   
             e.printStackTrace();
         }

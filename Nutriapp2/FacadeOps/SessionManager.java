@@ -1,6 +1,7 @@
 package FacadeOps;
 
 import java.util.*;
+
 //import FacadeOps.UserManager;
 public class SessionManager {
 
@@ -22,6 +23,7 @@ public class SessionManager {
         // generate session key and store it in the map of sessions
         String sessionKey = UUID.randomUUID().toString();
         sessions.put(sessionKey, username);
+        System.out.println(sessionKey);
         return sessionKey;
     }
     // logs out a user with the given session key

@@ -165,6 +165,9 @@ public class User {
     public void addWeight(double weight) {
         weights.push(weight);
     }
+    public String toString() {
+        return "Username= '" + name + "'";
+    }
 
     public double getPreviousWeight() {
         if (weights.size() < 2) {
