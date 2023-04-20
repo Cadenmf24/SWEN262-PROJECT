@@ -1,4 +1,4 @@
-package foodTests.tests;
+package Observer.tests;
 import org.junit.*;
 import Observer.*;
 

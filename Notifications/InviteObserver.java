@@ -1,7 +1,7 @@
 package Notifications;
 
 public class InviteObserver implements Observer {
-    Notification notification;
+    protected Notification notification;
 
     public InviteObserver(Notification notification){
        this.notification = notification;
