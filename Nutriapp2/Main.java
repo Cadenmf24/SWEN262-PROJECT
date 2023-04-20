@@ -8,7 +8,9 @@ import FacadeOps.FeatureManager;
 import FacadeOps.RecipeManager;
 import FacadeOps.SessionManager;
 import FacadeOps.HistoryManager;
+import FacadeOps.Pair;
 import FacadeOps.UserManager;
+import GuestMode.IngredientManager;
 import UserProfile.User;
 
 public class Main {
@@ -18,8 +20,10 @@ public class Main {
     public UserManager userManager = new UserManager();
     public FeatureManager featureManager = new FeatureManager();
     public RecipeManager recipeManager = new RecipeManager();
-    public HistoryManager historyManager = new HistoryManager();
+    //public List<Pair> list = new Pair(null, null);
+    public HistoryManager historyManager = new HistoryManager(null);
     public CommandManager commandManager = new CommandManager();
+    public IngredientManager ingredientManager = new IngredientManager(null);
 
     public static void main(String[] args) throws IOException{
         Main tracker = new Main();
@@ -188,7 +192,8 @@ public class Main {
         System.out.println("Ties have been cut!");
     }
     private void handleBrowseStock() {
-        // TODO: implement browsing stock functionality
+        System.out.println("Welcome! Here are some of our ingredients available in stock");
+        ingredientManager.getIngredients();
     }
 
     private void handleChangePassword() {
@@ -220,5 +225,5 @@ public class Main {
         userManager.acceptTeamRequest(username, otherUsername);
         System.out.println("Team request has been accepted!");
     }
-    //private static final String SAVE_FILE_NAME = "user_data.txt";
+    
 }

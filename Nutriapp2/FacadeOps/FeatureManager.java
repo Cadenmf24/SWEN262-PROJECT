@@ -1,43 +1,37 @@
 package FacadeOps;
-
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Stack;
-
+import Command.AddIngredientCommand;
+import Command.Command;
 //import Command.HistoryCommand;
-import Database.*;
 import State.Goal;
 import State.GoalState;
 import State.MaintainWeight;
 import UserProfile.User;
 import Workout.WorkoutFactory;
 import food.*;
-import Workout.*;;
+import Workout.*;
+import GuestMode.*;;
 
 public class FeatureManager {
     private User user;
-    private Database database;
-    //private HistoryCommand history;
-    private HistoryManager historyManager = new HistoryManager();
+    //private Database database;
+    private HistoryManager historyManager = new HistoryManager(null);
     private RecipeManager recipeManager;
     private ExerciseLog exerciseLog;
+    public IngredientManager ingredientManager = new IngredientManager(null);
 
     public FeatureManager() {
         this.user = new User(null, 0, 0, null);
-        this.database = new Database();
-        //this.history = new HistoryCommand();
-        //this.recipeManager = new RecipeManager();
-        //this.exerciseLog = exerciseLog;
     }
     public void accessAllFeatures() {
         // Gives authenticated users access to all features of the current system
+    
     }
     public void enterWeight() {
         User tracker = new User(null, 0, 0, null);
@@ -99,12 +93,33 @@ public class FeatureManager {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Search for an ingredient: ");
         String query = scanner.nextLine();
-        Ingredient ingredient = database.searchIngredients(query);
+        Ingredient ingredient = findIngredientByName(ingredientManager.getIngredients(), query);
         if (ingredient == null) {
             System.out.println("No results found.");
         } else {
             System.out.print("Enter quantity: ");
             double quantity = scanner.nextDouble();
+            
+            Command addCommand = new AddIngredientCommand(ingredient, (int) quantity);
+            addCommand.execute();
+            user.addIngredientToStock(ingredient, quantity);
+        }
+        scanner.close();
+    }
+
+    public void RemoveIngredientToStock() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Search for an ingredient: ");
+        String query = scanner.nextLine();
+        Ingredient ingredient = findIngredientByName(ingredientManager.getIngredients(), query);
+        if (ingredient == null) {
+            System.out.println("No results found.");
+        } else {
+            System.out.print("Enter quantity: ");
+            double quantity = scanner.nextDouble();
+            
+            Command addCommand = new AddIngredientCommand(ingredient, (int) quantity);
+            addCommand.undo();
             user.addIngredientToStock(ingredient, quantity);
         }
         scanner.close();
@@ -118,7 +133,7 @@ public class FeatureManager {
         while (addMoreIngredients) {
             System.out.print("Search for an ingredient: ");
             String query = scanner.nextLine();
-            Ingredient ingredient = database.searchIngredients(query);
+            Ingredient ingredient = findIngredientByName(ingredientManager.getIngredients(), query);
             if (ingredient == null) {
                 System.out.println("No results found.");
             } else {
@@ -188,9 +203,8 @@ public class FeatureManager {
         System.out.println("Enter a maximum price per unit for ingredients (leave blank for no maximum):");
         String maxPriceString = scanner.nextLine();
         double maxPrice = maxPriceString.isEmpty() ? Double.MAX_VALUE : Double.parseDouble(maxPriceString);
-
         Map<Ingredient, Double> shoppingList = new HashMap<>();
-        for (Ingredient ingredient : database.searchIngredients("")) { //database
+        for (Ingredient ingredient : ingredientManager.getIngredients()) { //database
             if (user.getStock().containsKey(ingredient)) {
                 continue;
             }
@@ -202,6 +216,7 @@ public class FeatureManager {
             }
             shoppingList.put(ingredient, ingredient.getBaseAmount());
         }
+        scanner.close();
         System.out.println("Shopping list generated: " + shoppingList);
     }
     public void trackWorkouts() {
@@ -243,19 +258,26 @@ public class FeatureManager {
     
     public void browseHistory() {
         System.out.println("Personal History:");
-        for (HistoryEntry entry : historyManager.getHistory()) { //fix
-            System.out.println(entry);
-        }
+        historyManager.getHistory();  //fix
+        System.out.println("All User History Has been Returned");
     }
     
     public void saveDailyActivity() {
         Scanner scanner = new Scanner(System.in);
-        historyManager.addEntry(user.getCurrentWeight(), exerciseLog.getExercises());
+        historyManager.addEntry(user.getCurrentWeight(), (String) exerciseLog.getExercises());
         System.out.print("Enter your current weight: ");
         double weight = scanner.nextDouble();
         user.setWeight(weight);
         scanner.close();
     }
 
+    public Ingredient findIngredientByName(List<Ingredient> ingredients, String name) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().equals(name)) {
+                return ingredient;
+            }
+        }
+        return null; // ingredient not found
+    }
     
 }

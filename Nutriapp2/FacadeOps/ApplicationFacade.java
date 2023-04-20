@@ -39,9 +39,9 @@ public class ApplicationFacade {
         }
     }
 
-    public void logout() {
+    public void logout(String username) {
         try {
-            sessionManager.logout(null);
+            sessionManager.logout(sessionManager.generateSessionKey(username));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -9,6 +9,9 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
+import GuestMode.IngredientManager;
+import food.Ingredient;
+
 public class CSVDataImporter implements DatabaseImporter{
     @Override
     public void importData(String fileName) throws CsvValidationException {
@@ -43,7 +46,10 @@ public class CSVDataImporter implements DatabaseImporter{
         for (int i = 0; i < columnsToKeep.size(); i++) {
             int columnIndex = columnsToKeep.get(i);
             trimmedLine[i] = line[columnIndex];
-            //addIngredient(trimmedLine[i]);
+            Ingredient ingredient = IngredientConverter.convertStringToIngredient(trimmedLine[i]);
+            List<Ingredient> list = new ArrayList<Ingredient>();
+            IngredientManager Manager = new IngredientManager(list);
+            Manager.addIngredient(ingredient);
         }
         return trimmedLine;
     }
