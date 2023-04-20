@@ -36,5 +36,15 @@ public class LoseWeightWorkout implements Workout{
         System.out.print("Do stuff to lose weight or something ");
         
     }
+
+    @Override
+    public int get_minutes() {
+        return this.minutes;
+    }
+
+    @Override
+    public LocalDate getDate() {
+        return this.date;
+    }
     
 }

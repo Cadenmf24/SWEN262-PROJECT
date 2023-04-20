@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,6 +21,8 @@ import Nutriapp2.Command.EnterDailyWeightCommand;
 import Nutriapp2.Command.SetGoalsCommand;
 import Nutriapp2.food.Ingredient;
 import Nutriapp2.food.Meal;
+import Workout.*;
+import teamThings.*;
 
 public class User {
     private String name;
@@ -37,8 +40,9 @@ public class User {
     private List<User> teamMembers;
     private Stack<Command> undoStack;
 
-
-
+    private Teams team = null;
+    private ArrayList<Workout> workouts = new ArrayList<>();
+    private ArrayList<String> notifications = new ArrayList<>();
 
     public User(String name, int height, double weight, Date birthdate) {
         this.name = name;
@@ -232,10 +236,41 @@ public class User {
         return null;
     }
 
+    public ArrayList<Workout> getWorkouts(){
+        return this.workouts;
+    }
+
     public void removeDailyWeight() {
     }
 
     public void removeTeamMember(User teamMember) {
+    }
+
+    public void joinTeam(Teams team_name){
+        if(this.team == null){
+            this.team = team_name;
+            team_name.joinTeam(this);
+        }
+        else{
+            System.out.println("You are already in a team!");
+        }
+    }
+    public void leaveTeam(Teams team_name){
+        if(this.team == team_name){
+            team_name.leaveTeam(this);
+            this.team = null;
+        }
+        else{
+            System.out.println("You are not in a team!");
+        }
+    }
+    public void addWorkout(String type, String intensity){
+        WorkoutFactory workout_factory = new WorkoutFactory();
+        Workout workout =  workout_factory.createWorkout(type, intensity);
+        this.workouts.add(workout);
+    }
+    public void notify(String message){
+        this.notifications.add(message);
     }
 
 }
