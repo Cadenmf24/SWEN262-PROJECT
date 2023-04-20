@@ -1,4 +1,4 @@
-package Notifications;
+package Nutriapp2.Notifications;
 
 public class Notification {
     protected String text;

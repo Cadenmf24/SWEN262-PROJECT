@@ -1,9 +1,8 @@
-package tests;
+package Nutriapp2.tests;
 import org.junit.*;
-
 import Observer.*;
 
-//@Testable
+@Testable
 
 public class ObserverTest {
     @Test
