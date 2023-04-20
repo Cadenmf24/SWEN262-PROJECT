@@ -3,24 +3,28 @@ package Notifications;
 import java.util.List;
 
 public class Invites implements Subject {
-    protected List<InviteObserver> inviteObservers;
+    protected List<Observer> observers;
 
     @Override
-    public void register(InviteObserver inviteObserver) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'register'");
+    public void register(Observer observer) {
+        if(observer == null) {
+            throw new NullPointerException("null"); 
+        }
+        else {
+            observers.add(observer);
+        }
     }
 
     @Override
     public void deregister(Observer observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deregister'");
+       observers.remove(observer);
     }
 
     @Override
     public void notifyObserver(Notification notification) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyObserver'");
+        for(Observer observer: observers){
+            observer.update(notification);
+        }
     }
     
 }

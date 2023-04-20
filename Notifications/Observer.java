@@ -1,5 +1,5 @@
 package Notifications;
 
 public interface Observer {
-    void update();
+    void update(Notification notification);
 }

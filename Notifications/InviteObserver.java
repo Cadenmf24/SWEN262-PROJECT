@@ -1,15 +1,15 @@
 package Notifications;
 
 public class InviteObserver implements Observer {
+    Notification notification;
 
-    public InviteObserver(){
-        super();
+    public InviteObserver(Notification notification){
+       this.notification = notification;
     }
 
     @Override
-    public void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public void update(Notification notification) {
+        System.out.println("Notification: " + notification.text);
     }
     
 }
