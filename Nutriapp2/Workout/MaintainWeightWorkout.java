@@ -36,4 +36,14 @@ public class MaintainWeightWorkout implements Workout{
         System.out.print("Do mixed workout ");
     }
     
+
+    @Override
+    public int get_minutes() {
+        return this.minutes;
+    }
+
+    @Override
+    public LocalDate getDate() {
+        return this.date;
+    }
 }

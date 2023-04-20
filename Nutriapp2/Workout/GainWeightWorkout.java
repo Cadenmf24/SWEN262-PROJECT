@@ -38,5 +38,15 @@ public class GainWeightWorkout implements Workout{
 
         System.out.print("Do less workout");
     }
+
+    @Override
+    public int get_minutes() {
+        return this.minutes;
+    }
+
+    @Override
+    public LocalDate getDate() {
+        return this.date;
+    }
     
 }
