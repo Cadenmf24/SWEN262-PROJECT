@@ -1,4 +1,4 @@
-package Nutriapp2.Strategy;
+package Strategy;
 
 public interface StrategyGoal {
 

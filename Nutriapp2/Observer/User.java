@@ -1,4 +1,4 @@
-package  Nutriapp2.Observer;
+package  Observer;
 
 import java.util.List;
 

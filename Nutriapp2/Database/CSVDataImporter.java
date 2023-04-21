@@ -1,4 +1,4 @@
-package Nutriapp2.Database;
+package Database;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,13 +9,13 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
-import Nutriapp2.GuestMode.IngredientManager;
-import Nutriapp2.food.Ingredient;
+import GuestMode.IngredientManager;
+import food.Ingredient;
 
 public class CSVDataImporter implements DatabaseImporter{
     @Override
     public void importData(String fileName) throws CsvValidationException {
-        String updatedcsvFile = "Database/data.csv";
+        String updatedcsvFile = "Nutriapp2/Database/data.csv";
 
         List<Integer> columnsToKeep = new ArrayList<>();
         columnsToKeep.add(0);  // Keep column NDB_No (id)

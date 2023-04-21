@@ -1,4 +1,4 @@
-package Nutriapp2.State;
+package State;
 
 
 public interface GoalState{

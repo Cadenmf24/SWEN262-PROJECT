@@ -1,4 +1,4 @@
-package Nutriapp2.Notifications;
+package Notifications;
 
 public interface Observer {
     void update(Notification notification);

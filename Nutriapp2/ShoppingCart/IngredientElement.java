@@ -1,4 +1,4 @@
-package Nutriapp2.ShoppingCart;
+package ShoppingCart;
 
 public interface IngredientElement {
 

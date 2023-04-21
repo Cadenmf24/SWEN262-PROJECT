@@ -1,4 +1,4 @@
-package Nutriapp2.teamThings;
+package teamThings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,8 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import Nutriapp2.Workout.Workout;
-import Nutriapp2.UserProfile.User;
+import Workout.Workout;
+import UserProfile.User;
 
 public class Teams implements TeamOptions{
     private String team_name;
@@ -33,6 +33,7 @@ public class Teams implements TeamOptions{
         this.team_members.add(user);
         if(this.invited_users.contains(user)){
             invited_users.remove(user);
+            user.joinTeam(this);
         }
     }
 
@@ -40,6 +41,7 @@ public class Teams implements TeamOptions{
     public void leaveTeam(User user){
         if(team_members.contains(user)){
             team_members.remove(user);
+            user.leaveTeam(this);
         }
     }
 

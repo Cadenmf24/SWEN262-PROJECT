@@ -1,4 +1,4 @@
-package Nutriapp2.FacadeOps;
+package FacadeOps;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -6,24 +6,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import Nutriapp2.Command.AddIngredientCommand;
-import Nutriapp2.Command.Command;
+import Command.AddIngredientCommand;
+import Command.Command;
 //import Command.HistoryCommand;
-import Nutriapp2.State.Goal;
-import Nutriapp2.State.GoalState;
-import Nutriapp2.State.MaintainWeight;
-import Nutriapp2.UserProfile.User;
-import Nutriapp2.Workout.WorkoutFactory;
-import Nutriapp2.food.*;
-import Nutriapp2.Workout.*;
-import Nutriapp2.GuestMode.*;;
+import State.Goal;
+import State.GoalState;
+import State.MaintainWeight;
+import UserProfile.User;
+import Workout.WorkoutFactory;
+import food.*;
+import Workout.*;
+import GuestMode.*;;
 
 public class FeatureManager {
     private User user;
     //private Database database;
     private HistoryManager historyManager = new HistoryManager(null);
     private RecipeManager recipeManager;
-    private ExerciseLog exerciseLog;
     public IngredientManager ingredientManager = new IngredientManager(null);
 
     public FeatureManager() {
@@ -77,18 +76,12 @@ public class FeatureManager {
         user.setGoal(goalString);
         scanner.close();
     }
-    public void addExercise() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
-        String type = scanner.nextLine();
-        //System.out.print("Enter exercise duration in minutes: ");
-        //int duration = scanner.nextInt();
-        System.out.print("Enter exercise intensity (low, medium, high): ");
-        String intensityString = scanner.next();
+    public Workout addExercise(String type, String intensityString) {
         WorkoutFactory wkt = new WorkoutFactory();
-        wkt.createWorkout(type, intensityString);
-        scanner.close();
+        return wkt.createWorkout(type, intensityString);
+        
     }
+
     public void addIngredientToStock() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Search for an ingredient: ");
@@ -220,18 +213,16 @@ public class FeatureManager {
         System.out.println("Shopping list generated: " + shoppingList);
     }
     public void trackWorkouts() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
-        String type = scanner.nextLine();
-        //System.out.print("Enter the duration in minutes: ");
-        //int duration = scanner.nextInt();
-        System.out.print("Enter exercise intensity (low, medium, high): ");
-        String intensity = scanner.nextLine(); //valueOf(scanner.next().toUpperCase());
-        WorkoutFactory wkt = new WorkoutFactory();
-        wkt.createWorkout(type, intensity);
-        exerciseLog.addExercise(wkt);
-        scanner.close();
-        System.out.println("Exercise added to log.");
+        // Scanner scanner = new Scanner(System.in);
+        // System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
+        // String type = scanner.nextLine();
+        // //System.out.print("Enter the duration in minutes: ");
+        // //int duration = scanner.nextInt();
+        // System.out.print("Enter exercise intensity (low, medium, high): ");
+        // String intensity = scanner.nextLine(); //valueOf(scanner.next().toUpperCase());
+        // scanner.close();
+        // System.out.println("Exercise added to log.");
+        
     }
     
     public void suggestExercise() {

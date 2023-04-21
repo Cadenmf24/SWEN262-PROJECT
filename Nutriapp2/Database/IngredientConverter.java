@@ -1,6 +1,6 @@
-package Nutriapp2.Database;
+package Database;
 
-import Nutriapp2.food.Ingredient;
+import food.Ingredient;
 
 public class IngredientConverter {
     

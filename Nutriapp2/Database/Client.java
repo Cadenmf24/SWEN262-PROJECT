@@ -1,4 +1,4 @@
-package Nutriapp2.Database;
+package Database;
 
 import com.opencsv.exceptions.CsvValidationException;
 

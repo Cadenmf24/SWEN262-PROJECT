@@ -5,11 +5,12 @@ import java.util.Scanner;
 
 import com.opencsv.exceptions.CsvValidationException;
 
-import Nutriapp2.Database.CSVDataImporter;
+import Database.CSVDataImporter;
+import Workout.Workout;
 //import Database.Database;
-import Nutriapp2.FacadeOps.*;
-import Nutriapp2.GuestMode.IngredientManager;
-import Nutriapp2.UserProfile.User;
+import FacadeOps.*;
+import GuestMode.IngredientManager;
+import UserProfile.User;
 
 public class Main {
     private User currentUser;
@@ -26,7 +27,7 @@ public class Main {
     public static void main(String[] args) throws IOException, CsvValidationException{
         Main tracker = new Main();
         CSVDataImporter csvDataImporter = new CSVDataImporter(); // Create the Adaptee object
-        csvDataImporter.importData("ingredients.csv"); // Call the importData method on the Adapter
+        csvDataImporter.importData("Database/ingredients.csv"); // Call the importData method on the Adapter
         tracker.run();
     }
     public void run() {
@@ -150,7 +151,7 @@ public class Main {
                 featureManager.setGoal();
                 break;
             case 10:
-                featureManager.addExercise();
+                handleExercise();
                 break;
             case 11:
                 featureManager.addIngredientToStock();
@@ -159,7 +160,7 @@ public class Main {
                 featureManager.createRecipe();
                 break;
             case 13:
-                featureManager.trackWorkouts();
+                handleTrackWorkout();
                 break;
             case 14:
                 featureManager.suggestExercise();
@@ -186,6 +187,16 @@ public class Main {
             e.printStackTrace();
         }
                 
+    }
+    public void handleExercise(){
+        System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
+        String type = scanner.nextLine();
+        //System.out.print("Enter exercise duration in minutes: ");
+        //int duration = scanner.nextInt();
+        System.out.print("Enter exercise intensity (low, medium, high): ");
+        String intensityString = scanner.next();
+        Workout workout = featureManager.addExercise(type, intensityString);
+        this.currentUser.addWorkout(workout);
     }
     private void handleLeaveTeam() {
         System.out.println("Enter username:");
@@ -226,6 +237,13 @@ public class Main {
         String otherUsername = scanner.nextLine();
         userManager.acceptTeamRequest(username, otherUsername);
         System.out.println("Team request has been accepted!");
+    }
+
+    private void handleTrackWorkout(){
+        ArrayList<Workout> workoutHistory =  currentUser.getWorkouts();
+        for (Workout workout : workoutHistory) {
+            System.out.println(workout);
+        }
     }
     
 }

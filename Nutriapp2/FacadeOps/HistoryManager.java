@@ -1,4 +1,4 @@
-package Nutriapp2.FacadeOps;
+package FacadeOps;
 //import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;

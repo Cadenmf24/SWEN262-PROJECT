@@ -1,7 +1,7 @@
-package Nutriapp2.FacadeOps;
+package FacadeOps;
 import java.util.Stack;
 
-import Nutriapp2.Command.Command;
+import Command.Command;
 
 public class CommandManager {
     private Stack<Command> undoStack;

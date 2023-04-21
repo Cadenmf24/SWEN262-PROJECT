@@ -1,4 +1,4 @@
-package Nutriapp2.Workout;
+package Workout;
 
 public class WorkoutFactory {
     
