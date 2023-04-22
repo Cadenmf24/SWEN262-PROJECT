@@ -1,4 +1,4 @@
-package Database;
+package Nutriapp2.Database;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,8 +9,8 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
-import GuestMode.IngredientManager;
-import food.Ingredient;
+import Nutriapp2.GuestMode.IngredientManager;
+import Nutriapp2.food.Ingredient;
 
 public class CSVDataImporter implements DatabaseImporter{
     @Override

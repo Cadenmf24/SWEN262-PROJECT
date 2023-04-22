@@ -1,4 +1,4 @@
-package Nutriapp2.UserProfile;
+package Nutriapp2;
 
 
 import java.io.BufferedReader;
@@ -75,7 +75,6 @@ public class User {
      // method for setting/changing goals
     public void setGoal(String state){
         this.goal = state;
-        System.out.println(state);
         Command command = new SetGoalsCommand(this, state);
         command.execute();
         undoStack.push(command);
@@ -270,9 +269,9 @@ public class User {
             System.out.println("You are not in a team!");
         }
     }
-    public void addWorkout(Workout workout){
-        // WorkoutFactory workout_factory = new WorkoutFactory();
-        // Workout workout =  workout_factory.createWorkout(type, intensity);
+    public void addWorkout(String type, String intensity){
+        WorkoutFactory workout_factory = new WorkoutFactory();
+        Workout workout =  workout_factory.createWorkout(type, intensity);
         this.workouts.add(workout);
     }
     public void notify(String message){

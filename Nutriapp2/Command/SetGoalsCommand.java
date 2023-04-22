@@ -1,6 +1,6 @@
-package Command;
+package Nutriapp2.Command;
 
-import UserProfile.User;
+import Nutriapp2.UserProfile.User;
 
 public class SetGoalsCommand implements Command {
     private User user;

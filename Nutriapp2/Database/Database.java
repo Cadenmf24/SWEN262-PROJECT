@@ -1,6 +1,6 @@
-package Database;
+package Nutriapp2.Database;
 
-import food.Ingredient;
+import Nutriapp2.food.Ingredient;
 
 public class Database {
     public Ingredient searchIngredients(String name){

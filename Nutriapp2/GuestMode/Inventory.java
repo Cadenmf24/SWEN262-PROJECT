@@ -1,8 +1,8 @@
-package GuestMode;
+package Nutriapp2.GuestMode;
 
 import java.util.List;
 
-import food.Ingredient;
+import Nutriapp2.food.Ingredient;
 
 interface Inventory{
     List<Ingredient> getIngredients();

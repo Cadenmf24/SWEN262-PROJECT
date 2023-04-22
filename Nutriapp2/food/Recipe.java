@@ -1,4 +1,4 @@
-package food;
+package Nutriapp2.food;
 
 import java.util.HashMap;
 

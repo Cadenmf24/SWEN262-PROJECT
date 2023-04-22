@@ -1,4 +1,4 @@
-package Notifications;
+package Nutriapp2.Notifications;
 
 public interface Subject {
     void register(Observer observer);

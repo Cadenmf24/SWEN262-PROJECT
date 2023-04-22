@@ -1,8 +1,8 @@
-package Command;
+package Nutriapp2.Command;
 
-import food.Ingredient;
-import food.InsufficientQuantityException;
-import food.Stock;
+import Nutriapp2.food.Ingredient;
+import Nutriapp2.food.InsufficientQuantityException;
+import Nutriapp2.food.Stock;
 public class AddIngredientCommand implements Command {
     private Stock stock = new Stock();
     private Ingredient ingredient;

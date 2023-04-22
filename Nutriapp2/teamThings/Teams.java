@@ -1,4 +1,4 @@
-package teamThings;
+package Nutriapp2.teamThings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,8 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import Workout.Workout;
-import UserProfile.User;
+import Nutriapp2.Workout.Workout;
+import Nutriapp2.UserProfile.User;
 
 public class Teams implements TeamOptions{
     private String team_name;

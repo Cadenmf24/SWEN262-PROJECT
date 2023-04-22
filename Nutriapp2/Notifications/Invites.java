@@ -1,4 +1,4 @@
-package Notifications;
+package Nutriapp2.Notifications;
 
 import java.util.List;
 

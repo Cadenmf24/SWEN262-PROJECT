@@ -1,6 +1,6 @@
-package ShoppingCart;
+package Nutriapp2.ShoppingCart;
 
-import food.Ingredient;
+import Nutriapp2.food.Ingredient;
 
 public class ShoppingCartVisitor_child implements ShoppingCartVisitor{
     @Override

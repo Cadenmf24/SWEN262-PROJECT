@@ -1,7 +1,7 @@
-package teamThings;
+package Nutriapp2.teamThings;
 
-import UserProfile.User;
-import Workout.Workout;
+import Nutriapp2.UserProfile.User;
+import Nutriapp2.Workout.Workout;
 
 public interface TeamOptions {
     
