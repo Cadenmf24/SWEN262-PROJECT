@@ -115,9 +115,14 @@ public class Main {
         System.out.println("14. Suggest an Exercise");
         System.out.println("15. Save Daily Activity");
         System.out.println("16. Quit");
+
         int choice = scanner.nextInt();
-        scanner.nextLine();
+
+
         switch (choice) {
+            case 0:
+                System.out.println("Invalid choice!");
+                handleUserMode();
             case 1:
                 handleBrowseStock();
                 break;

@@ -27,6 +27,7 @@ public class FeatureManager {
     private HistoryManager historyManager = new HistoryManager(null);
     private RecipeManager recipeManager;
     public IngredientManager ingredientManager = new IngredientManager(null);
+    GoalState state;
 
     public FeatureManager() {
         this.user = new User(null, 0, 0, null);
@@ -72,8 +73,8 @@ public class FeatureManager {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
         String goalString = scanner.nextLine();
-        GoalState state;
-        switch(goalString){
+        switch(goalString)
+        {
             case "GainWeight":
             state = new GainWeight();
             break;
@@ -86,12 +87,10 @@ public class FeatureManager {
             default:
             state = new MaintainWeight();
         }
-
         Goal goalType = new Goal();
         goalType.setGoalType(state);
         System.out.println(goalType.toString());
         user.setGoal(goalString);
-        scanner.close();
     }
     public Workout addExercise(String type, String intensityString) {
         WorkoutFactory wkt = new WorkoutFactory();
