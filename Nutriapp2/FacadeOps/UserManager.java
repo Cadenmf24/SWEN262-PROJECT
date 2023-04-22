@@ -18,7 +18,7 @@ public class UserManager {
         if (!users.containsKey(username)) {
             return false; // username not found
         }
-        System.out.println("Authentication was a success");
+        //System.out.println("Authentication was a success");
         return users.get(username).equals(password); // check if password matches
     }
     public void register(String username, String password) {

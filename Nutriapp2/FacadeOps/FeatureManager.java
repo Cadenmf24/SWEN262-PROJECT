@@ -32,41 +32,13 @@ public class FeatureManager {
         // Gives authenticated users access to all features of the current system
     
     }
-    public void enterWeight() {
-        User tracker = new User(null, 0, 0, null);
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter weight: ");
-            double weight = scanner.nextDouble();
-            scanner.nextLine(); // consume the newline character
-
-            tracker.addWeight(weight);
-            tracker.getPreviousWeight();
-            scanner.close();
-        }
-        
-    }
-    public void enterUserStats() throws ParseException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter your height in inches: ");
-        int height = scanner.nextInt();
-        System.out.print("Enter your weight in pounds: ");
-        int weight = scanner.nextInt();
-        System.out.print("Enter your birthdate in yyyy-MM-dd format: ");
-        String birthdate = scanner.next();
+    public Date formatDateStringtoDate(String birthdate) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse(birthdate);
-        user.setName(name);
-        user.setHeight(height);
-        user.setWeight(weight);
-        user.setBirthdate(date);
-        scanner.close();
+        return date;
     }
     public void setGoal() {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
         String goalString = scanner.nextLine();
         GoalState state = new MaintainWeight();
@@ -74,7 +46,6 @@ public class FeatureManager {
         goalType.setGoalType(state);
         System.out.println(goalType.toString());
         user.setGoal(goalString);
-        scanner.close();
     }
     public Workout addExercise(String type, String intensityString) {
         WorkoutFactory wkt = new WorkoutFactory();

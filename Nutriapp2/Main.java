@@ -1,5 +1,6 @@
 import java.io.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Scanner;
 
@@ -10,6 +11,8 @@ import Workout.Workout;
 //import Database.Database;
 import FacadeOps.*;
 import GuestMode.IngredientManager;
+import State.Goal;
+import State.GoalState;
 import UserProfile.User;
 
 public class Main {
@@ -138,17 +141,13 @@ public class Main {
                 currentUser = null;
                 break;
             case 7:
-                featureManager.enterWeight();;
+                handleEnterWeight();
                 break;
             case 8:
-                try {
-                    featureManager.enterUserStats();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                };
+                handleEnterUserStats();
                 break;
             case 9:
-                featureManager.setGoal();
+                handleUserSetGoal();
                 break;
             case 10:
                 handleExercise();
@@ -185,8 +184,43 @@ public class Main {
             sessionManager.logout(sessionManager.generateSessionKey(username));
         } catch (Exception e) {
             e.printStackTrace();
+        }           
+    }//test fails need to update code in a way that can add the String goal chosen my the useer as their goal's current state
+    public void handleUserSetGoal(){
+        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
+        String goalString = scanner.nextLine();
+        Goal state = new Goal();
+        Goal goalType = new Goal();
+        goalType.setGoalType((GoalState) state);
+        System.out.println(goalType.toString());
+        currentUser.setGoal(goalString);
+    }
+    public void handleEnterWeight(){
+        System.out.print("Enter weight: ");
+        double weight = scanner.nextDouble();
+        scanner.nextLine();
+        currentUser.addWeight(weight);
+        currentUser.getPreviousWeight();
+    }
+    public void handleEnterUserStats(){
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter your height in inches: ");
+        int height = scanner.nextInt();
+        System.out.print("Enter your weight in pounds: ");
+        int weight = scanner.nextInt();
+        System.out.print("Enter your birthdate in yyyy-MM-dd format: ");
+        String birthdate = scanner.next();
+        try {
+            Date date = featureManager.formatDateStringtoDate(birthdate);
+            currentUser.setName(name);
+            currentUser.setHeight(height);
+            currentUser.setWeight(weight);
+            currentUser.setBirthdate(date);
+            System.out.printf("Username: ", currentUser.getCurrentName(), " Age: ", currentUser.calculateAge(), " Weight: ", currentUser.getCurrentWeight());
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-                
     }
     public void handleExercise(){
         System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
