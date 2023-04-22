@@ -8,9 +8,11 @@ import java.util.Map;
 import java.util.Scanner;
 import Nutriapp2.Command.AddIngredientCommand;
 import Nutriapp2.Command.Command;
+import Nutriapp2.State.GainWeight;
 //import Command.HistoryCommand;
 import Nutriapp2.State.Goal;
 import Nutriapp2.State.GoalState;
+import Nutriapp2.State.LoseWeight;
 import Nutriapp2.State.MaintainWeight;
 import Nutriapp2.UserProfile.User;
 import Nutriapp2.Workout.WorkoutFactory;
@@ -70,7 +72,21 @@ public class FeatureManager {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
         String goalString = scanner.nextLine();
-        GoalState state = new MaintainWeight();
+        GoalState state;
+        switch(goalString){
+            case "GainWeight":
+            state = new GainWeight();
+            break;
+            case "LoseWeight":
+            state = new LoseWeight();
+            break;
+            case "MaintainWeight":
+            state = new MaintainWeight();
+            break;
+            default:
+            state = new MaintainWeight();
+        }
+
         Goal goalType = new Goal();
         goalType.setGoalType(state);
         System.out.println(goalType.toString());

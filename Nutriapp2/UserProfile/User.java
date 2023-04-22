@@ -74,12 +74,15 @@ public class User {
     
      // method for setting/changing goals
     public void setGoal(String state){
-        this.goal = state;
-        System.out.println(state);
         Command command = new SetGoalsCommand(this, state);
         command.execute();
         undoStack.push(command);
     }
+
+    public void changeGoal(String state){
+        this.goal = state;
+    }
+    
     public void setName(String name){
         this.name = name;
     }
