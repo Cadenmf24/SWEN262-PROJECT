@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 import Command.AddIngredientCommand;
 import Command.Command;
+import State.*;
 //import Command.HistoryCommand;
 import State.Goal;
 import State.GoalState;
@@ -24,7 +25,8 @@ public class FeatureManager {
     private HistoryManager historyManager = new HistoryManager(null);
     private RecipeManager recipeManager;
     public IngredientManager ingredientManager = new IngredientManager(null);
-
+    GoalState state;
+    
     public FeatureManager() {
         this.user = new User(null, 0, 0, null);
     }
@@ -38,10 +40,23 @@ public class FeatureManager {
         return date;
     }
     public void setGoal() {
-        //Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
         String goalString = scanner.nextLine();
-        GoalState state = new MaintainWeight();
+        switch(goalString)
+        {
+            case "GainWeight":
+            state = new GainWeight();
+            break;
+            case "LoseWeight":
+            state = new LoseWeight();
+            break;
+            case "MaintainWeight":
+            state = new MaintainWeight();
+            break;
+            default:
+            state = new MaintainWeight();
+        }
         Goal goalType = new Goal();
         goalType.setGoalType(state);
         System.out.println(goalType.toString());

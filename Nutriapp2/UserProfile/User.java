@@ -79,6 +79,10 @@ public class User {
         command.execute();
         undoStack.push(command);
     }
+
+    public void changeGoal(String state){
+        this.goal = state;
+    }
     public void setName(String name){
         this.name = name;
     }
