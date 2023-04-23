@@ -127,7 +127,7 @@ public class Main {
         System.out.println("11. Add an ingredient to stock");
         System.out.println("12. Create a Recipe");
         System.out.println("13. Track your Workouts");
-        System.out.println("14. Suggest an Exercise");
+        // System.out.println("14. Suggest an Exercise");
         System.out.println("15. Save Daily Activity");
         System.out.println("16. View Workouts of Team Member");
         System.out.println("17. Issue Team Challenge");
@@ -178,9 +178,9 @@ public class Main {
             case 13:
                 handleTrackWorkout();
                 break;
-            case 14:
-                handleBrowseHistory();
-                break;
+            // case 14:
+            //     handleBrowseHistory();
+            //     break;
             case 15:
                 handleSaveDailyActivity();;
                 break;
