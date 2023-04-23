@@ -24,6 +24,7 @@ import food.Ingredient;
 import food.Meal;
 import Workout.*;
 import teamThings.*;
+import Notifications.*;
 
 
 public class User {
@@ -41,10 +42,11 @@ public class User {
     private List<Meal> meals;
     private List<User> teamMembers;
     private Stack<Command> undoStack;
+    private List<Notification> notifications;
 
     private Teams team = null;
     private ArrayList<Workout> workouts = new ArrayList<>();
-    private ArrayList<String> notifications = new ArrayList<>();
+    //private ArrayList<String> notifications = new ArrayList<>();
 
     public User(String name, int height, double weight, Date birthdate) {
         this.name = name;
@@ -123,6 +125,9 @@ public class User {
     }
     public int getExercisePerDay(){
         return exercisePerDay;
+    }
+    public List<Notification> getNotifications(){
+        return notifications;
     }
 
     // Save the user profile to a file
@@ -274,8 +279,8 @@ public class User {
         // Workout workout =  workout_factory.createWorkout(type, intensity);
         this.workouts.add(workout);
     }
-    public void notify(String message){
-        this.notifications.add(message);
+    public void notify(Notification notification){
+        this.notifications.add(notification);
     }
 
 }

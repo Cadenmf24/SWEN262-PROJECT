@@ -8,12 +8,14 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import Database.CSVDataImporter;
 import Workout.Workout;
+import teamThings.Teams;
 //import Database.Database;
 import FacadeOps.*;
 import GuestMode.IngredientManager;
 import State.Goal;
 import State.GoalState;
 import UserProfile.User;
+import Notifications.Notification;
 
 public class Main {
     private User currentUser;
@@ -233,9 +235,10 @@ public class Main {
         this.currentUser.addWorkout(workout);
     }
     private void handleLeaveTeam() {
-        System.out.println("Enter username:");
-        String username = scanner.nextLine();
-        userManager.leaveTeam(username);
+        System.out.println("Enter team to leave: ");
+        String team_input = scanner.nextLine();
+        Teams team = new Teams(team_input);
+        currentUser.leaveTeam(team);
         System.out.println("Ties have been cut!");
     }
     private void handleBrowseStock() {
@@ -256,21 +259,28 @@ public class Main {
     }
 
     private void handleSendTeamRequest() {
-        System.out.println("Enter username:");
-        String username = scanner.nextLine();
-        System.out.println("Enter username:");
+        // System.out.println("Enter username:");
+        // String username = scanner.nextLine();
+        System.out.println("Enter username to send request to:");
         String otherUsername = scanner.nextLine();
-        userManager.sendTeamRequest(username, otherUsername);
+        //userManager.sendTeamRequest(username, otherUsername);
         System.out.println("Team request has been sent over!");
     }
 
     private void handleAcceptTeamRequest() {
-        System.out.println("Enter username:");
-        String username = scanner.nextLine();
-        System.out.println("Enter username:");
-        String otherUsername = scanner.nextLine();
-        userManager.acceptTeamRequest(username, otherUsername);
-        System.out.println("Team request has been accepted!");
+        // System.out.println("Enter username:");
+        // String username = scanner.nextLine();
+        // System.out.println("Enter username:");
+        // String otherUsername = scanner.nextLine();
+        // userManager.acceptTeamRequest(username, otherUsername);
+        // System.out.println("Team request has been accepted!");
+        System.out.println("Requests recieved: ");
+        for(Notification notification : currentUser.getNotifications()){
+            System.out.println(notification);
+            System.out.println("Accept team request? (Y/N) ");
+            String accept = scanner.nextLine();
+            System.out.println(accept);
+        }
     }
 
     private void handleTrackWorkout(){

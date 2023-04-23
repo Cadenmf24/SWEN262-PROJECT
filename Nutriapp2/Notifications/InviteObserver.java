@@ -9,7 +9,8 @@ public class InviteObserver implements Observer {
 
     @Override
     public void update(Notification notification) {
-        System.out.println("Notification: " + notification.text);
+        //System.out.println("Notification: " + notification.text);
+        
     }
     
 }
