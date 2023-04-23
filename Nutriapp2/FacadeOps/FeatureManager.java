@@ -22,7 +22,7 @@ import GuestMode.*;;
 public class FeatureManager {
     private User user;
     //private Database database;
-    private HistoryManager historyManager = new HistoryManager(null);
+    private HistoryManager historyManager = new HistoryManager();
     private RecipeManager recipeManager;
     public IngredientManager ingredientManager = new IngredientManager(null);
     GoalState state;

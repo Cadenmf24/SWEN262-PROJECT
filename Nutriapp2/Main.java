@@ -12,12 +12,14 @@ import Database.CSVDataImporter;
 import Workout.Workout;
 import food.Ingredient;
 import food.Recipe;
+import State.GainWeight;
+import State.GoalState;
+import State.LoseWeight;
+import State.MaintainWeight;
 //import Database.Database;
 import FacadeOps.*;
-import State.Goal;
-import State.GoalState;
 import UserProfile.User;
-
+import State.Goal;
 public class Main {
     private User currentUser;
     private Scanner scanner = new Scanner(System.in);
@@ -25,10 +27,12 @@ public class Main {
     public UserManager userManager = new UserManager();
     public FeatureManager featureManager = new FeatureManager();
     public RecipeManager recipeManager = new RecipeManager();
-    public List<Pair> list;
-    public HistoryManager historyManager = new HistoryManager(list);
+    //public List<Pair> list;
+    public HistoryManager historyManager = new HistoryManager();
     public CommandManager commandManager = new CommandManager();
     static List<Ingredient> ingredientsList = new ArrayList<>();
+    GoalState state;
+    
     public static void main(String[] args) throws IOException, CsvValidationException{
         Main tracker = new Main();
         CSVDataImporter csvDataImporter = new CSVDataImporter(); // Create the Adaptee object
@@ -123,9 +127,10 @@ public class Main {
         System.out.println("11. Add an ingredient to stock");
         System.out.println("12. Create a Recipe");
         System.out.println("13. Track your Workouts");
-        System.out.println("14. Suggest an Exercise");
+        System.out.println("14. Browse User History");
         System.out.println("15. Save Daily Activity");
-        System.out.println("16. Quit");
+        System.out.println("16. Suggest an Exercise");
+        System.out.println("17. Quit");
         int choice = scanner.nextInt();
         scanner.nextLine();
         switch (choice) {
@@ -155,7 +160,8 @@ public class Main {
                 handleEnterUserStats();
                 break;
             case 9:
-                featureManager.setGoal();
+                handleUserSetGoal();
+                //featureManager.setGoal();
                 break;
             case 10:
                 handleWorkout();
@@ -173,9 +179,11 @@ public class Main {
                 handleBrowseHistory();
                 break;
             case 15:
-                handleSaveDailyActivity();;
+                handleSaveDailyActivity();
                 break;
             case 16:
+                handleSuggestWorkout();
+            case 17:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
@@ -194,15 +202,29 @@ public class Main {
             e.printStackTrace();
         }           
     }//test fails need to update code in a way that can add the String goal chosen my the useer as their goal's current state
-    // public void handleUserSetGoal(){
-    //     System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
-    //     String goalString = scanner.nextLine();
-    //     Goal state = new Goal();
-    //     Goal goalType = new Goal();
-    //     goalType.setGoalType((GoalState) state);
-    //     System.out.println(goalType.toString());
-    //     currentUser.setGoal(goalString);
-    // }
+    public void handleUserSetGoal(){
+        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
+        String goalString = scanner.nextLine();
+        switch(goalString)
+        {
+            case "GainWeight":
+            state = new GainWeight();
+            break;
+            case "LoseWeight":
+            state = new LoseWeight();
+            break;
+            case "MaintainWeight":
+            state = new MaintainWeight();
+            break;
+            default:
+            state = new MaintainWeight();
+        }
+        Goal goalType = new Goal();
+        goalType.setGoalType(state);
+        System.out.println(goalType.toString());
+        currentUser.setGoal(goalString);
+        System.out.print(currentUser.getGoal());
+    }
     public void handleEnterWeight(){
         System.out.print("Enter weight: ");
         double weight = scanner.nextDouble();
@@ -227,13 +249,13 @@ public class Main {
             currentUser.setHeight(height);
             currentUser.setWeight(weight);
             currentUser.setBirthdate(date);
-            System.out.printf("Username: ", currentUser.getCurrentName(), " Age: ", currentUser.calculateAge(), " Weight: ", currentUser.getCurrentWeight());
+            System.out.printf("Username: "+ currentUser.getCurrentName()+ "\n Age: "+  " : " + currentUser.calculateAge()+ "\n Weight: " + currentUser.getCurrentWeight() + "\n Height: " + currentUser.getCurrentHeight() + "\n");
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
     public void handleWorkout(){
-        System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
+        System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeight): ");
         String type = scanner.nextLine();
         System.out.print("Enter exercise intensity (low, medium, high): ");
         String intensityString = scanner.next();
@@ -277,7 +299,7 @@ public class Main {
     private void handleSuggestWorkout(){
         System.out.print("Enter a target calories amount: ");
         int target = scanner.nextInt();
-        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
+        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight): ");
         String goalString = scanner.nextLine();
         System.out.print("Enter exercise intensity (low, medium, high): ");
         String intense = scanner.nextLine();
@@ -329,6 +351,26 @@ public class Main {
             System.out.println(workout);
         }
     }
+    
+    private void handleSaveDailyActivity(){
+        historyManager.addEntry(currentUser.getCurrentWeight(), currentUser.getWorkouts());
+        currentUser.getHistory();
+        System.out.print("Enter your current weight: ");
+        double weight = scanner.nextDouble();
+        currentUser.setWeight(weight);
+        System.out.print(currentUser.getCurrentWeight());
+    }
+    
+    private void handleBrowseHistory(){
+        ArrayList<HistoryManager> HistoryEntries =  currentUser.getHistory();
+        for (HistoryManager history: HistoryEntries) {
+            System.out.println(history);
+        }
+        System.out.println("Personal History:");
+        //historyManager.getHistory();  //fix
+        System.out.println("All User History Has been Returned");
+    
+    }
     private void handleCreateRecipe(){
         System.out.print("Enter recipe name: ");
         String name = scanner.nextLine();
@@ -354,17 +396,5 @@ public class Main {
             addMoreIngredients = addMoreIngredientsString.equalsIgnoreCase("y");
             //scanner.nextLine();
         }
-    }
-    private void handleSaveDailyActivity(){
-        historyManager.addEntry(currentUser.getCurrentWeight(), currentUser.getWorkouts());
-        System.out.print("Enter your current weight: ");
-        double weight = scanner.nextDouble();
-        currentUser.setWeight(weight);
-    }
-    private void handleBrowseHistory(){
-        System.out.println("Personal History:");
-        historyManager.getHistory();  //fix
-        System.out.println("All User History Has been Returned");
-    
     }
 }

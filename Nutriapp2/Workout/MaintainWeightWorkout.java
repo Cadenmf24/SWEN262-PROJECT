@@ -49,7 +49,7 @@ public class MaintainWeightWorkout implements Workout{
     
     @Override
     public String toString() {
-        return "MaintainWeight Workout for " + minutes + " minute on " + date;
+        return "MaintainWeight Workout for " + minutes + " minutes on " + date;
     }
     
 }

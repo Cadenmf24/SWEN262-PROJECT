@@ -20,6 +20,7 @@ import Command.AddTeamMemberCommand;
 import Command.Command;
 import Command.EnterDailyWeightCommand;
 import Command.SetGoalsCommand;
+import FacadeOps.HistoryManager;
 import food.Ingredient;
 import food.Meal;
 import Workout.*;
@@ -44,6 +45,7 @@ public class User {
 
     private Teams team = null;
     private ArrayList<Workout> workouts = new ArrayList<>();
+    private ArrayList<HistoryManager> history = new ArrayList<>();
     private ArrayList<String> notifications = new ArrayList<>();
 
     public User(String name, int height, double weight, Date birthdate) {
@@ -129,7 +131,9 @@ public class User {
     public int getExercisePerDay(){
         return exercisePerDay;
     }
-
+    public Date getBDate(){
+        return birthdate;
+    }
     // Save the user profile to a file
     public void saveToFile(File file) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -242,12 +246,11 @@ public class User {
         }
     }
 
-    public Map getStock() {
-        return null;
-    }
-
     public ArrayList<Workout> getWorkouts(){
         return this.workouts;
+    }
+    public ArrayList<HistoryManager> getHistory(){
+        return this.history;
     }
 
     public void removeDailyWeight() {
@@ -275,9 +278,10 @@ public class User {
         }
     }
     public void addWorkout(Workout workout){
-        // WorkoutFactory workout_factory = new WorkoutFactory();
-        // Workout workout =  workout_factory.createWorkout(type, intensity);
         this.workouts.add(workout);
+    }
+    public void addHistory(HistoryManager history){
+        this.history.add(history);
     }
     public void notify(String message){
         this.notifications.add(message);
