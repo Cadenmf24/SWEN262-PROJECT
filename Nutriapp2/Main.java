@@ -147,7 +147,7 @@ public class Main {
                 handleEnterUserStats();
                 break;
             case 9:
-                handleUserSetGoal();
+                featureManager.setGoal();
                 break;
             case 10:
                 handleExercise();
@@ -186,15 +186,15 @@ public class Main {
             e.printStackTrace();
         }           
     }//test fails need to update code in a way that can add the String goal chosen my the useer as their goal's current state
-    public void handleUserSetGoal(){
-        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
-        String goalString = scanner.nextLine();
-        Goal state = new Goal();
-        Goal goalType = new Goal();
-        goalType.setGoalType((GoalState) state);
-        System.out.println(goalType.toString());
-        currentUser.setGoal(goalString);
-    }
+    // public void handleUserSetGoal(){
+    //     System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
+    //     String goalString = scanner.nextLine();
+    //     Goal state = new Goal();
+    //     Goal goalType = new Goal();
+    //     goalType.setGoalType((GoalState) state);
+    //     System.out.println(goalType.toString());
+    //     currentUser.setGoal(goalString);
+    // }
     public void handleEnterWeight(){
         System.out.print("Enter weight: ");
         double weight = scanner.nextDouble();

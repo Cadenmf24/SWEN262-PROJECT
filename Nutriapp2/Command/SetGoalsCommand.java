@@ -15,7 +15,7 @@ public class SetGoalsCommand implements Command {
     
     public void execute() {
         // Change the user's current goal
-        user.setGoal(newGoal);
+        user.changeGoal(newGoal);
     }
     
     public void undo() {
