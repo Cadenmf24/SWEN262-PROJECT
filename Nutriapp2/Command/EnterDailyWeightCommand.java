@@ -1,6 +1,6 @@
-package Nutriapp2.Command;
+package Command;
 
-import Nutriapp2.UserProfile.User;
+import UserProfile.User;
 
 public class EnterDailyWeightCommand implements Command {
     private User user;

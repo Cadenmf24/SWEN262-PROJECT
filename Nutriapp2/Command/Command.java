@@ -1,4 +1,4 @@
-package Nutriapp2.Command;
+package Command;
 
 public interface Command {
     public void execute();

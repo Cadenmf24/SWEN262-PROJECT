@@ -1,4 +1,4 @@
-package Nutriapp2.FacadeOps;
+package FacadeOps;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -6,19 +6,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import Nutriapp2.Command.AddIngredientCommand;
-import Nutriapp2.Command.Command;
-import Nutriapp2.State.GainWeight;
+import Command.AddIngredientCommand;
+import Command.Command;
+import State.GainWeight;
 //import Command.HistoryCommand;
-import Nutriapp2.State.Goal;
-import Nutriapp2.State.GoalState;
-import Nutriapp2.State.LoseWeight;
-import Nutriapp2.State.MaintainWeight;
-import Nutriapp2.UserProfile.User;
-import Nutriapp2.Workout.WorkoutFactory;
-import Nutriapp2.food.*;
-import Nutriapp2.Workout.*;
-import Nutriapp2.GuestMode.*;
+import State.Goal;
+import State.GoalState;
+import State.LoseWeight;
+import State.MaintainWeight;
+import UserProfile.User;
+import Workout.WorkoutFactory;
+import food.*;
+import Workout.*;
+import GuestMode.*;
 
 
 public class FeatureManager {

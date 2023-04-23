@@ -1,4 +1,4 @@
-package Nutriapp2.State;
+package State;
 
 public class GainWeight implements GoalState{
 

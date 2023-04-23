@@ -1,4 +1,4 @@
-package Nutriapp2.Database;
+package Database;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,7 +1,7 @@
-package Nutriapp2.GuestMode;
+package GuestMode;
 import java.util.List;
 
-import Nutriapp2.food.Ingredient;
+import food.Ingredient;
 
 public class IngredientManagerProxy implements Inventory{
     private IngredientManager ingredientManager;

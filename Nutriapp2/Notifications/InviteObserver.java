@@ -1,4 +1,4 @@
-package Nutriapp2.Notifications;
+package Notifications;
 
 public class InviteObserver implements Observer {
     protected Notification notification;
