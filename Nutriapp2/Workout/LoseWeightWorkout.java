@@ -1,12 +1,12 @@
 package Nutriapp2.Workout;
 import java.util.Random;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class LoseWeightWorkout implements Workout{
 
     public double intensity;
     public int minutes; 
-    public LocalDate date; 
+    public LocalDateTime date;
     public int calories;
 
     public LoseWeightWorkout(String intensity){
@@ -25,8 +25,8 @@ public class LoseWeightWorkout implements Workout{
         }
 
         this.intensity = difficulty;
-        this.minutes = r.nextInt(200);//(((int)difficulty - 1) * 10);
-        this.date = LocalDate.now();
+        this.minutes = r.nextInt(60);
+        this.date = LocalDateTime.now();
         this.calories = (int)difficulty * minutes;
     }
 
@@ -43,7 +43,7 @@ public class LoseWeightWorkout implements Workout{
     }
 
     @Override
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return this.date;
     }
 

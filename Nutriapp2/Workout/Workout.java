@@ -1,12 +1,12 @@
 package Nutriapp2.Workout;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public interface Workout {
 
     public void suggest();
 
     public int get_minutes();
-    public LocalDate getDate();
+    public LocalDateTime getDate();
     
 }
