@@ -2,7 +2,7 @@ package persistence.user;
 
 import java.io.IOException;
 
-import UserProfile.User;
+import user.User;
 
 
 

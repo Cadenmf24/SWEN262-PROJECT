@@ -3,8 +3,8 @@ package persistence.ingredient;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -51,7 +51,7 @@ public class IngredientFileDAO implements IngredientDAO {
     }
 
     /**
-     * Generates an array of ingredients from the tree map
+     * Generates an array of ingredients from the Hash map
      * 
      * @return The array of ingredients, may be empty
      */
@@ -60,10 +60,10 @@ public class IngredientFileDAO implements IngredientDAO {
     }
 
     /**
-     * Generates an array of ingredient from the tree map for any
+     * Generates an array of ingredient from the Hash map for any
      * ingredient that contains the text specified by containsText
      * If containsText is null, the array contains all of the ingredient
-     * in the tree map
+     * in the Hash map
      * 
      * @return The array of ingredient, may be empty
      */
@@ -109,7 +109,7 @@ public class IngredientFileDAO implements IngredientDAO {
      * @throws IOException         when file cannot be accessed or read from
      */
     private boolean load() throws IOException {
-        ingredients = new TreeMap<>();
+        ingredients = new HashMap<>();
         nextId = 0;
 
         // Deserializes the JSON objects from the file into an array of ingredient
@@ -119,7 +119,7 @@ public class IngredientFileDAO implements IngredientDAO {
 
         ingredientArray = objectMapper.readValue(new File(filename), Ingredient[].class);
 
-        // Add each ingredient to the tree map and keep track of the greatest id
+        // Add each ingredient to the Hash map and keep track of the greatest id
         for (Ingredient i : ingredientArray) {
             ingredients.put(i.getId(), i);
             if (i.getId() > nextId)
@@ -190,7 +190,7 @@ public class IngredientFileDAO implements IngredientDAO {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
     }
 
 }

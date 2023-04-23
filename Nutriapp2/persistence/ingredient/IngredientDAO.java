@@ -53,12 +53,12 @@ public interface IngredientDAO {
     Ingredient updateIngredient(Ingredient ingredient) throws IOException;
 
     /**
-     * Deletes a  User with the given id
+     * Deletes a  Ingredient with the given id
      * 
-     * @param id The id of the  User}
+     * @param id The id of the  Ingredient}
      * 
-     * @return true if the User was deleted
-     * false if User with the given id does not exist
+     * @return true if the Ingredient was deleted
+     * false if Ingredient with the given id does not exist
      * 
      * @throws IOException if underlying storage cannot be accessed
      */

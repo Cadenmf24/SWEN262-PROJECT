@@ -2,8 +2,7 @@ package persistence.goal;
 
 import java.io.IOException;
 
-
-import State.Goal;
+import goal.Goal;
 
 public interface GoalDAO {
     /**

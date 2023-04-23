@@ -3,15 +3,15 @@ package persistence.goal;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import goal.Goal;
+
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
-
-import State.Goal;
 
 public class GoalFileDAO implements GoalDAO {
 
@@ -51,7 +51,7 @@ public class GoalFileDAO implements GoalDAO {
     }
 
     /**
-     * Generates an array of goals from the tree map
+     * Generates an array of goals from the hash map
      * 
      * @return The array of goals, may be empty
      */
@@ -60,10 +60,10 @@ public class GoalFileDAO implements GoalDAO {
     }
 
     /**
-     * Generates an array of goal from the tree map for any
+     * Generates an array of goal from the hash map for any
      * goal that contains the text specified by containsText
      * If containsText is null, the array contains all of the goals
-     * in the tree map
+     * in the hash map
      * 
      * @return The array of goals, may be empty
      */
@@ -109,7 +109,7 @@ public class GoalFileDAO implements GoalDAO {
      * @throws IOException         when file cannot be accessed or read from
      */
     private boolean load() throws IOException {
-        goals = new TreeMap<>();
+        goals = new HashMap<>();
         nextId = 0;
 
         // Deserializes the JSON objects from the file into an array of goal
@@ -119,7 +119,7 @@ public class GoalFileDAO implements GoalDAO {
 
         goalArray = objectMapper.readValue(new File(filename), Goal[].class);
 
-        // Add each goal to the tree map and keep track of the greatest id
+        // Add each goal to the hash map and keep track of the greatest id
         for (Goal goal : goalArray) {
             goals.put(goal.getId(), goal);
             if (goal.getId() > nextId)

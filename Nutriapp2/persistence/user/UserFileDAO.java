@@ -3,14 +3,14 @@ package persistence.user;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import UserProfile.User;
+import user.User;
 
 // Implements the functionality for JSON file-based peristance for users
 
@@ -51,7 +51,7 @@ public class UserFileDAO implements UserDAO {
     }
 
     /**
-     * Generates an array of { User users} from the tree map
+     * Generates an array of { User users} from the Hash map
      * 
      * @return The array of {User users}, may be empty
      */
@@ -60,12 +60,12 @@ public class UserFileDAO implements UserDAO {
     }
 
     /**
-     * Generates an array of {User users} from the tree map for any
+     * Generates an array of {User users} from the Hash map for any
      * { User users} that contains the text specified by containsText
      * <br>
      * If containsText is null, the array contains all of the {User
      * users}
-     * in the tree map
+     * in the Hash map
      * 
      * @return The array of {@link User users}, may be empty
      */
@@ -110,10 +110,10 @@ public class UserFileDAO implements UserDAO {
      * @throws DatabindException
      * @throws StreamReadException
      * 
-     * @throws IOException when file cannot be accessed or read from
+     * @throws IOException         when file cannot be accessed or read from
      */
     private boolean load() throws IOException {
-        users = new TreeMap<>();
+        users = new HashMap<>();
         nextId = 0;
 
         // Deserializes the JSON objects from the file into an array of users
@@ -123,7 +123,7 @@ public class UserFileDAO implements UserDAO {
 
         UserArray = objectMapper.readValue(new File(filename), User[].class);
 
-        // Add each User to the tree map and keep track of the greatest id
+        // Add each User to the Hash map and keep track of the greatest id
         for (User User : UserArray) {
             users.put(User.getId(), User);
             if (User.getId() > nextId)
@@ -163,14 +163,12 @@ public class UserFileDAO implements UserDAO {
 
     public User loginUser(User user) throws IOException {
         for (User element : getUsersArray(user.getUsername())) {
-            if (element.getUsername() == user.getUsername() && element.getPassword() == user.getPassword()) {
-                return user;
-            } else {
-                continue;
+            if (element.getPassword() == user.getPassword()) {
+                return element;
             }
         }
-        createUser(user);
-        return user;
+        // createUser(user);
+        return null;
     }
 
     public User updateUser(User User) throws IOException {
@@ -192,5 +190,22 @@ public class UserFileDAO implements UserDAO {
             return false;
 
     }
+
+    // public static void main(String[] args) {
+    // try {
+    // UserFileDAO uFD = new UserFileDAO("Nutriapp2/data/users.json", new
+    // ObjectMapper());
+    // User jkson = new User(1, "jackson123", "password");
+    // // uFD.createUser(jkson);
+    // jkson.setBirthDate("2003-08-09");
+    // jkson.setHeight(74);
+    // jkson.setWeight(160);
+    // jkson.setName("jackson");
+    // uFD.updateUser(jkson);
+    // } catch (IOException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+    // }
 
 }
