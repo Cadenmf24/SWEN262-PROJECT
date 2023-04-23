@@ -259,32 +259,64 @@ public class User {
     public void removeTeamMember(User teamMember) {
     }
 
+    public void createTeam(Teams team_name){
+        this.team = team_name;
+        team_name.joinTeamBypass(this);
+        System.out.println("Team successfully created");
+    }
+
     public void joinTeam(Teams team_name){
         if(this.team == null){
-            this.team = team_name;
-            team_name.joinTeam(this);
+            boolean joinedTeam = team_name.joinTeam(this);
+            if(joinedTeam == true){
+                this.team = team_name;
+            }else{
+                System.out.println("Sorry, you have not been invited to this team!");
+            }
         }
         else{
             System.out.println("You are already in a team!");
         }
     }
-    public void leaveTeam(Teams team_name){
-        if(this.team == team_name){
-            team_name.leaveTeam(this);
-            this.team = null;
+    public void leaveTeam(){
+        if(this.team == null){
+            System.out.println("You are not in a team!"); 
         }
         else{
-            System.out.println("You are not in a team!");
+            this.team.leaveTeam(this);
+            this.team = null;
         }
     }
     public void addWorkout(Workout workout){
         this.workouts.add(workout);
+        if(this.team != null){
+            this.team.logWorkout(this, workout);
+        }
     }
     public void addHistory(HistoryManager history){
         this.history.add(history);
     }
     public void notify(String message){
         this.notifications.add(message);
+    }
+
+    public void sendInvite(User user){
+        if(this.team == null){
+            System.out.println("You are not in a team! Join a team to invite others."); 
+        }
+        else{
+        this.team.sendInvite(this, user);
+        }
+    }
+
+    public void viewTeamMemberHistory(User targetName){
+        this.team.viewHistory(targetName);
+    }
+    public void issueChallenge(Integer minutes){
+        this.team.setChallenge(minutes);
+    }  
+    public void viewChallengeProgress(){
+        this.team.viewRanking();
     }
 
 }

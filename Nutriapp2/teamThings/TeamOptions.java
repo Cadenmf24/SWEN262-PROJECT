@@ -5,7 +5,7 @@ import Workout.Workout;
 
 public interface TeamOptions {
     
-    public void joinTeam(User user);
+    public boolean joinTeam(User user);
     public void leaveTeam(User user);
     public void sendInvite(User sender, User receiver);
     public void viewHistory(User user);

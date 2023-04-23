@@ -97,9 +97,9 @@ public class Main {
         String username = scanner.nextLine();
         System.out.println("Enter password:");
         String password = scanner.nextLine();
-        UserManager manager = new UserManager();
+        //UserManager manager = new UserManager();
         try {
-            manager.register(username, password);
+            userManager.register(username, password);
             sessionManager.login(username, password);
         } catch (Exception e) {   
             e.printStackTrace();
@@ -124,9 +124,16 @@ public class Main {
         System.out.println("8. Enter user stats");
         System.out.println("9. Set Goal");
         System.out.println("10. Add an Exercise");
-        System.out.println("11. Track your Workouts");
-        System.out.println("12. Save Daily Activity");
-        System.out.println("13. Quit");
+        System.out.println("11. Add an ingredient to stock");
+        System.out.println("12. Create a Recipe");
+        System.out.println("13. Track your Workouts");
+        System.out.println("14. Suggest an Exercise");
+        System.out.println("15. Save Daily Activity");
+        System.out.println("16. View Workouts of Team Member");
+        System.out.println("17. Issue Team Challenge");
+        System.out.println("18. View Challenge Ranking");
+        System.out.println("19. Create a team");
+        System.out.println("20. Quit");
         int choice = scanner.nextInt();
         scanner.nextLine();
         switch (choice) {
@@ -169,6 +176,27 @@ public class Main {
                 handleSaveDailyActivity();
                 break;
             case 13:
+                handleTrackWorkout();
+                break;
+            case 14:
+                handleBrowseHistory();
+                break;
+            case 15:
+                handleSaveDailyActivity();;
+                break;
+            case 16:
+                handleViewWorkoutHistory();
+                break;
+            case 17:
+                handleIssueChallenge();
+                break;
+            case 18:
+                handleViewChallengeProgress();
+                break;
+            case 19:
+                handleCreateTeam();
+                break;
+            case 20:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
@@ -245,7 +273,7 @@ public class Main {
         System.out.print("Enter exercise intensity (low, medium, high): ");
         String intensityString = scanner.next();
         Workout workout = featureManager.addExercise(type, intensityString);
-        this.currentUser.addWorkout(workout);
+        this.userManager.addWorkout(currentUser.getCurrentName(), workout);
     }
     public void handleRemoveIngredientFromStock(){
         System.out.print("Search for an ingredient: ");
@@ -260,9 +288,7 @@ public class Main {
         }
     }
     private void handleLeaveTeam() {
-        System.out.println("Enter username:");
-        String username = scanner.nextLine();
-        userManager.leaveTeam(username);
+        userManager.leaveTeam(this.currentUser.getCurrentName());
         System.out.println("Ties have been cut!");
     }
     public void handleAddIngredientToStock(){
@@ -314,28 +340,43 @@ public class Main {
     }
 
     private void handleSendTeamRequest() {
-        System.out.println("Enter username:");
+        System.out.println("Enter receiver's username:");
         String username = scanner.nextLine();
-        System.out.println("Enter username:");
-        String otherUsername = scanner.nextLine();
-        userManager.sendTeamRequest(username, otherUsername);
-        System.out.println("Team request has been sent over!");
+        userManager.sendTeamRequest(this.currentUser.getCurrentName(), username);
     }
 
     private void handleAcceptTeamRequest() {
-        System.out.println("Enter username:");
+        System.out.println("Enter sender's username:");
         String username = scanner.nextLine();
-        System.out.println("Enter username:");
-        String otherUsername = scanner.nextLine();
-        userManager.acceptTeamRequest(username, otherUsername);
-        System.out.println("Team request has been accepted!");
+        System.out.println("Enter the team you would like to join:");
+        String teamname = scanner.nextLine();
+        userManager.acceptTeamRequest(username, this.currentUser.getCurrentName(), teamname);
+    }
+
+    private void handleViewWorkoutHistory(){
+        System.out.println("Enter username of target:");
+        String targetUsername = scanner.nextLine();
+        userManager.viewHistory(this.currentUser.getCurrentName(), targetUsername);
+    }
+
+    private void handleIssueChallenge(){
+        System.out.println("Enter target minutes for the week:");
+        Integer targetMinutes = scanner.nextInt();
+        userManager.issueChallenge(this.currentUser.getCurrentName(), targetMinutes);
+    }
+
+    private void handleViewChallengeProgress(){
+        userManager.viewChallengeProgress(this.currentUser.getCurrentName());
+    }
+
+    private void handleCreateTeam(){
+        System.out.println("Please enter desired team name:");
+        String teamName = scanner.nextLine();
+        userManager.createTeam(teamName, this.currentUser.getCurrentName());
     }
 
     private void handleTrackWorkout(){
-        ArrayList<Workout> workoutHistory =  currentUser.getWorkouts();
-        for (Workout workout : workoutHistory) {
-            System.out.println(workout);
-        }
+        userManager.getWorkouts(this.currentUser.getCurrentName());
     }
     
     private void handleSaveDailyActivity(){
