@@ -10,17 +10,17 @@ import java.util.ArrayList;
  */
 public class Meal extends Food {
 
-    private ArrayList<Recipe> recipes;
+    private ArrayList<Integer> recipes;
 
     public Meal(int id, String name) {
-        super(id, name, 0, 0, 0, 0, 0);
+        super(id, name);
         recipes = new ArrayList<>();
     }
 
     public Meal() {
     }
 
-    public ArrayList<Recipe> getRecipes() {
+    public ArrayList<Integer> getRecipes() {
         return recipes;
     }
 
@@ -36,16 +36,11 @@ public class Meal extends Food {
      * adds a recipe to the list of recipes
      * then updates meal info
      * 
-     * @param recipe   Recipe object
+     * @param recipe   Recipe id
      * @param quantity int
      */
-    public void addRecipe(Recipe recipe) {
-        recipes.add(recipe);
-        calories += recipe.getCalories();
-        fat += recipe.getFat();
-        fiber += recipe.getFiber();
-        protein += recipe.getProtein();
-        carbs += recipe.getCarbs();
+    public void addRecipe(Integer recipeId) {
+        recipes.add(recipeId);
     }
 
     /**
@@ -55,17 +50,8 @@ public class Meal extends Food {
      * @param recipe   Recipe object
      * @param quantity int
      */
-    public void removeRecipe(Recipe recipe) {
-        recipes.remove(recipe);
-        calories -= recipe.getCalories();
-        fat -= recipe.getFat();
-        fiber -= recipe.getFiber();
-        protein -= recipe.getProtein();
-        carbs -= recipe.getCarbs();
-    }
-
-    public Integer getServings() {
-        return null;
+    public void removeRecipe(Integer recipeId) {
+        recipes.remove(recipeId);
     }
 
 }

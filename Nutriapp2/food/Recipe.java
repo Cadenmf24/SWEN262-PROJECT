@@ -13,13 +13,14 @@ public class Recipe extends Food {
     private String instructions;
 
     /**
-     * hash map where the keys are the ingredients and the values are the how many
+     * hash map where the keys are the ingredients ids and the values are the how
+     * many
      * times that ingredient is used in the recipe aka the quantity
      */
-    private HashMap<Ingredient, Integer> ingredients;
+    private HashMap<Integer, Integer> ingredients;
 
     public Recipe(int id, String name, String instructions) {
-        super(id, name, 0, 0, 0, 0, 0);
+        super(id, name);
         instructions = this.instructions;
         ingredients = new HashMap<>();
     }
@@ -28,7 +29,7 @@ public class Recipe extends Food {
         super();
     }
 
-    public HashMap<Ingredient, Integer> getIngredients() {
+    public HashMap<Integer, Integer> getIngredients() {
         return ingredients;
     }
 
@@ -48,17 +49,13 @@ public class Recipe extends Food {
      * adds an ingredient and associated quantity to the recipes ingredients
      * then updates recipe info
      * 
-     * @param ingredient Ingredient object
-     * @param quantity   int
+     * @param ingredientId Ingredient id
+     * @param quantity     int
      */
-    public void addIngredient(Ingredient ingredient, int quantity) {
+    public void addIngredient(int ingredientId, int quantity) {
         if (quantity > 0) {
-            ingredients.put(ingredient, quantity);
-            calories += ingredient.getCalories() * quantity;
-            fat += ingredient.getFat() * quantity;
-            fiber += ingredient.getFiber() * quantity;
-            protein += ingredient.getProtein() * quantity;
-            carbs += ingredient.getCarbs() * quantity;
+            ingredients.put(ingredientId, quantity);
+
         }
     }
 
@@ -66,15 +63,10 @@ public class Recipe extends Food {
      * removes an ingredient from recipes ingredients
      * then updates recipe info
      * 
-     * @param ingredient Ingredient object
+     * @param ingredientId Ingredient id
      */
-    public void removeIngredient(Ingredient ingredient) {
-        int quantity = ingredients.get(ingredient);
-        ingredients.remove(ingredient);
-        calories -= ingredient.getCalories() * quantity;
-        fat -= ingredient.getFat() * quantity;
-        fiber -= ingredient.getFiber() * quantity;
-        protein -= ingredient.getProtein() * quantity;
-        carbs -= ingredient.getCarbs() * quantity;
+    public void removeIngredient(int ingredientId) {
+        ingredients.remove(ingredientId);
     }
+
 }

@@ -163,11 +163,12 @@ public class UserFileDAO implements UserDAO {
 
     public User loginUser(User user) throws IOException {
         for (User element : getUsersArray(user.getUsername())) {
-            if (element.getPassword() == user.getPassword()) {
+            if (element.getUsername().equals(user.getUsername()) && element.getPassword().equals(user.getPassword())) {
                 return element;
             }
         }
         // createUser(user);
+        System.out.println("uDAO 172");
         return null;
     }
 

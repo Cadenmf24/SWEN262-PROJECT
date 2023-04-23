@@ -12,57 +12,24 @@ public abstract class Food {
 
     protected String name;
 
-    protected int calories;
-
-    /**
-     * all measured in grams
-     */
-    protected int fat;
-
-    protected int protein;
-
-    protected int fiber;
-
-    protected int carbs;
-
-    public Food(int id, String name, int calories, int fat, int protein, int fiber, int carbs) {
+    public Food(int id, String name) {
+        this.id = id;
         this.name = name;
-        this.calories = calories;
-        this.fat = fat;
-        this.protein = protein;
-        this.fiber = fiber;
-        this.carbs = carbs;
     }
 
     public Food() {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public int getCalories() {
-        return calories;
-    }
-
-    public int getFat() {
-        return fat;
-    }
-
-    public int getProtein() {
-        return protein;
-    }
-
-    public int getFiber() {
-        return fiber;
-    }
-
-    public int getCarbs() {
-        return carbs;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
