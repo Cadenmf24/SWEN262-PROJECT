@@ -42,7 +42,7 @@ public class FeatureManager {
         return date;
     }
     public void setGoal() {
-        //Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
         String goalString = scanner.nextLine();
         switch(goalString)
