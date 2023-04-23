@@ -15,7 +15,7 @@ import GuestMode.IngredientManager;
 import State.Goal;
 import State.GoalState;
 import UserProfile.User;
-import Notifications.Notification;
+import Notifications.*;
 
 public class Main {
     private User currentUser;
@@ -263,6 +263,9 @@ public class Main {
         // String username = scanner.nextLine();
         System.out.println("Enter username to send request to:");
         String otherUsername = scanner.nextLine();
+        Teams team = new Teams("Team 1");
+        Notification notification = new Notification("You have been invited to join Team!", team);
+        //Invites.notifyObserver(notification, otherUsername);
         //userManager.sendTeamRequest(username, otherUsername);
         System.out.println("Team request has been sent over!");
     }
@@ -279,6 +282,9 @@ public class Main {
             System.out.println(notification);
             System.out.println("Accept team request? (Y/N) ");
             String accept = scanner.nextLine();
+            if(accept == "Y"){
+                //join team
+            }
             System.out.println(accept);
         }
     }

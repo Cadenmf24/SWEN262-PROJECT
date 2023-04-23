@@ -1,6 +1,7 @@
 package Notifications;
 
 import java.util.List;
+import UserProfile.User;
 
 public class Invites implements Subject {
     protected List<Observer> observers;
@@ -21,9 +22,9 @@ public class Invites implements Subject {
     }
 
     @Override
-    public void notifyObserver(Notification notification) {
+    public void notifyObserver(Notification notification, User user) {
         for(Observer observer: observers){
-            observer.update(notification);
+            observer.update(notification, user);
         }
     }
     
