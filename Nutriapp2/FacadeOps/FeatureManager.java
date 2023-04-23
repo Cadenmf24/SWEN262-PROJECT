@@ -39,29 +39,7 @@ public class FeatureManager {
         Date date = dateFormat.parse(birthdate);
         return date;
     }
-    public void setGoal() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
-        String goalString = scanner.nextLine();
-        switch(goalString)
-        {
-            case "GainWeight":
-            state = new GainWeight();
-            break;
-            case "LoseWeight":
-            state = new LoseWeight();
-            break;
-            case "MaintainWeight":
-            state = new MaintainWeight();
-            break;
-            default:
-            state = new MaintainWeight();
-        }
-        Goal goalType = new Goal();
-        goalType.setGoalType(state);
-        System.out.println(goalType.toString());
-        user.setGoal(goalString);
-    }
+
     public Workout addExercise(String type, String intensityString) {
         WorkoutFactory wkt = new WorkoutFactory();
         return wkt.createWorkout(type, intensityString);
@@ -79,34 +57,6 @@ public class FeatureManager {
         Command addCommand = new AddIngredientCommand(ingredient, quantity);
         addCommand.undo();
         user.addIngredientToStock(ingredient, quantity);
-    }
-    public void createRecipe() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter recipe name: ");
-        String name = scanner.nextLine();
-        Recipe recipe = new Recipe(name, name);
-        boolean addMoreIngredients = true;
-        while (addMoreIngredients) {
-            System.out.print("Search for an ingredient: ");
-            String query = scanner.nextLine();
-            Ingredient ingredient = findIngredientByName(ingredientManager.getIngredients(), query);
-            if (ingredient == null) {
-                System.out.println("No results found.");
-            } else {
-                System.out.print("Enter quantity: ");
-                int quantity = scanner.nextInt();
-                recipe.addIngredient(ingredient, quantity);
-            }
-            System.out.print("Add another ingredient? (y/n): ");
-            String addMoreIngredientsString = scanner.next();
-            addMoreIngredients = addMoreIngredientsString.equalsIgnoreCase("y");
-            scanner.nextLine();
-        }
-        System.out.print("Enter preparation instructions: ");
-        String instructions = scanner.nextLine();
-        recipe.setInstructions(instructions);
-        recipeManager.addRecipe(recipe);
-        scanner.close();
     }
     public void createMeal() {
         Scanner scanner = new Scanner(System.in);
@@ -153,7 +103,7 @@ public class FeatureManager {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Let's generate a shopping list!");
-        System.out.println("Enter a minimum quantity for ingredients (leave blank for no minimum):");
+        System.out.println("Enter a minimum quantity for ingredients (leave blank for no minimum): ");
         String minQuantityString = scanner.nextLine();
         double minQuantity = minQuantityString.isEmpty() ? 0 : Double.parseDouble(minQuantityString);
         System.out.println("Enter a maximum price per unit for ingredients (leave blank for no maximum):");
@@ -188,8 +138,11 @@ public class FeatureManager {
     
 
     public Ingredient findIngredientByName(List<Ingredient> ingredients, String name) {
+        
         for (Ingredient ingredient : ingredients) {
-            if (ingredient.getName().equals(name)) {
+            System.out.print("\nList: " + ingredient.getName());
+            if ((String) ingredient.getName() == name) {
+                System.out.println(ingredient.getName());
                 return ingredient;
             }
         }

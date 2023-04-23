@@ -124,13 +124,9 @@ public class Main {
         System.out.println("8. Enter user stats");
         System.out.println("9. Set Goal");
         System.out.println("10. Add an Exercise");
-        System.out.println("11. Add an ingredient to stock");
-        System.out.println("12. Create a Recipe");
-        System.out.println("13. Track your Workouts");
-        System.out.println("14. Browse User History");
-        System.out.println("15. Save Daily Activity");
-        System.out.println("16. Suggest an Exercise");
-        System.out.println("17. Quit");
+        System.out.println("11. Track your Workouts");
+        System.out.println("12. Save Daily Activity");
+        System.out.println("13. Quit");
         int choice = scanner.nextInt();
         scanner.nextLine();
         switch (choice) {
@@ -167,23 +163,12 @@ public class Main {
                 handleWorkout();
                 break;
             case 11:
-                handleAddIngredientToStock();
-                break;
-            case 12:
-                featureManager.createRecipe();
-                break;
-            case 13:
                 handleTrackWorkout();
                 break;
-            case 14:
-                handleBrowseHistory();
-                break;
-            case 15:
+            case 12:
                 handleSaveDailyActivity();
                 break;
-            case 16:
-                handleSuggestWorkout();
-            case 17:
+            case 13:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
@@ -203,7 +188,7 @@ public class Main {
         }           
     }//test fails need to update code in a way that can add the String goal chosen my the useer as their goal's current state
     public void handleUserSetGoal(){
-        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
+        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight): ");
         String goalString = scanner.nextLine();
         switch(goalString)
         {
@@ -249,7 +234,7 @@ public class Main {
             currentUser.setHeight(height);
             currentUser.setWeight(weight);
             currentUser.setBirthdate(date);
-            System.out.printf("Username: "+ currentUser.getCurrentName()+ "\n Age: "+  " : " + currentUser.calculateAge()+ "\n Weight: " + currentUser.getCurrentWeight() + "\n Height: " + currentUser.getCurrentHeight() + "\n");
+            System.out.printf("Username: "+ currentUser.getCurrentName()+ "\n Age: " + currentUser.calculateAge()+ "\n Weight: " + currentUser.getCurrentWeight() + "\n Height: " + currentUser.getCurrentHeight() + "\n");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -297,22 +282,23 @@ public class Main {
         
     }
     private void handleSuggestWorkout(){
-        System.out.print("Enter a target calories amount: ");
+        //System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight): ");
+        //String goalString = scanner.nextLine();
+        System.out.println("Enter a target calories amount: ");
         int target = scanner.nextInt();
-        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight): ");
-        String goalString = scanner.nextLine();
-        System.out.print("Enter exercise intensity (low, medium, high): ");
+        System.out.println("Enter exercise intensity (low, medium, high): ");
         String intense = scanner.nextLine();
         currentUser.setTargetCalories(target);
-        int excessCalories = (int) (currentUser.updateTargetCaloriesPerDay(goalString) - currentUser.getTargetCalories());
+        
+        int excessCalories = (int) (currentUser.updateTargetCaloriesPerDay(currentUser.getGoal()) - currentUser.getTargetCalories());
         if (excessCalories > 0) {
-
-            int exerciseDuration = (int) Math.ceil(excessCalories / currentUser.getCaloriesBurned(intense));
+            int exerciseDuration = (excessCalories / currentUser.getCaloriesBurned(intense));
             System.out.printf("You have exceeded your daily calorie target by %d calories. "
                     + "Consider doing %d minutes of exercise to burn them off.%n", excessCalories, exerciseDuration);
         } else {
             System.out.println("You have not exceeded your daily calorie target.");
         }
+
     }
 
     private void handleChangePassword() {
@@ -372,9 +358,9 @@ public class Main {
     
     }
     private void handleCreateRecipe(){
-        System.out.print("Enter recipe name: ");
+        System.out.println("Enter recipe name: ");
         String name = scanner.nextLine();
-        System.out.print("Enter your Instructions: ");
+        System.out.println("Enter your Instructions: ");
         String instructions = scanner.nextLine();
         Recipe recipe = new Recipe(name, instructions);
         recipe.setInstructions(instructions);
@@ -384,6 +370,7 @@ public class Main {
             System.out.print("Search for an ingredient: ");
             String query = scanner.nextLine();
             Ingredient ingredient = featureManager.findIngredientByName(ingredientsList, query);
+            System.out.println("Here");
             if (ingredient == null) {
                 System.out.println("No results found.");
             } else {
@@ -394,7 +381,7 @@ public class Main {
             System.out.print("Add another ingredient? (y/n): ");
             String addMoreIngredientsString = scanner.next();
             addMoreIngredients = addMoreIngredientsString.equalsIgnoreCase("y");
-            //scanner.nextLine();
+            scanner.nextLine();
         }
     }
 }

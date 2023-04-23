@@ -107,9 +107,9 @@ public class User {
         int bmr = (int) (10 * weight + 6.25 * height - 5 * calculateAge());
         switch (goal) {
             case "LoseWeight":
-                return (int) (bmr * 1.2) - 500;
+                return (int) (bmr * 1.2) - 100;
             case "GainWeight":
-                return (int) (bmr * 1.2) + 500;
+                return (int) (bmr * 1.2) + 100;
             case "MaintainWeight":
             default:
                 return (int) (bmr * 1.2);
