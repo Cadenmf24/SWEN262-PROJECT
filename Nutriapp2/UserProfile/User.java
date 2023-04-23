@@ -16,12 +16,12 @@ import java.util.Map;
 import java.util.Stack;
 
 
-import Nutriapp2.Command.AddTeamMemberCommand;
-import Nutriapp2.Command.Command;
-import Nutriapp2.Command.EnterDailyWeightCommand;
-import Nutriapp2.Command.SetGoalsCommand;
-import Nutriapp2.food.Ingredient;
-import Nutriapp2.food.Meal;
+import Command.AddTeamMemberCommand;
+import Command.Command;
+import Command.EnterDailyWeightCommand;
+import Command.SetGoalsCommand;
+import food.Ingredient;
+import food.Meal;
 import Workout.*;
 import teamThings.*;
 
@@ -253,20 +253,24 @@ public class User {
 
     public void joinTeam(Teams team_name){
         if(this.team == null){
-            this.team = team_name;
-            team_name.joinTeam(this);
+            boolean joinedTeam = team_name.joinTeam(this);
+            if(joinedTeam == true){
+                this.team = team_name;
+            }else{
+                System.out.println("Sorry, you have not been invited to this team!");
+            }
         }
         else{
             System.out.println("You are already in a team!");
         }
     }
-    public void leaveTeam(Teams team_name){
-        if(this.team == team_name){
-            team_name.leaveTeam(this);
-            this.team = null;
+    public void leaveTeam(){
+        if(this.team == null){
+            System.out.println("You are not in a team!"); 
         }
         else{
-            System.out.println("You are not in a team!");
+            this.team.leaveTeam(this);
+            this.team = null;
         }
     }
     public void addWorkout(String type, String intensity){
@@ -276,6 +280,25 @@ public class User {
     }
     public void notify(String message){
         this.notifications.add(message);
+    }
+
+    public void sendInvite(User user){
+        if(this.team == null){
+            System.out.println("You are not in a team! Join a team to invite others."); 
+        }
+        else{
+        this.team.sendInvite(this, user);
+        }
+    }
+
+    public void viewTeamMemberHistory(String targetName){
+        this.team.viewHistory(targetName);
+    }
+    public void issueChallenge(Integer minutes){
+        this.team.setChallenge(minutes);
+    }  
+    public void viewChallengeProgress(){
+        this.team.viewRanking();
     }
 
 }

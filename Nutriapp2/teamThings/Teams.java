@@ -29,10 +29,14 @@ public class Teams implements TeamOptions{
     }
 
     @Override
-    public void joinTeam(User user) {
-        this.team_members.add(user);
+    public boolean joinTeam(User user) {
         if(this.invited_users.contains(user)){
             invited_users.remove(user);
+            this.team_members.add(user);
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
@@ -40,6 +44,9 @@ public class Teams implements TeamOptions{
     public void leaveTeam(User user){
         if(team_members.contains(user)){
             team_members.remove(user);
+        }
+        else{
+            System.out.println("How did you even get here? Something went really wrong.");
         }
     }
 
@@ -49,19 +56,25 @@ public class Teams implements TeamOptions{
             this.invited_users.add(receiver);
             receiver.notify("You have been invited to " + this.team_name + " by " + sender.getCurrentName());
         }
-        else{
-            System.out.println("You are not in a team! Join a team to invite others.");
-        }
     }
 
     @Override
-    public void viewHistory(User user) {
-        if(team_members.contains(user)){
-            ArrayList<Workout> member_workouts = user.getWorkouts();
-            System.out.println("Workout history for "+ user.getCurrentName() + ":");
+    public void viewHistory(String targetName) {
+        User tempUser = null;
+        for (User user : team_members) {
+            if(user.getCurrentName() ==targetName){
+                tempUser = user;
+            }
+        }
+        if(tempUser != null){
+            ArrayList<Workout> member_workouts = tempUser.getWorkouts();
+            System.out.println("Workout history for "+ tempUser.getCurrentName() + ":");
             for (Workout workout : member_workouts) {
                 System.out.println(workout.getDate() + ": " + workout.get_minutes() + "minutes");
             }
+        }
+        else{
+            System.out.println("Target user could not be found");
         }
     }
 
