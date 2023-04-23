@@ -1,9 +1,10 @@
 package FacadeOps;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
+import Workout.Workout;
 import teamThings.Teams;
 import UserProfile.User;
 
@@ -111,6 +112,10 @@ public class UserManager {
         }
     }
 
+    public void addWorkout(String username, Workout workout){
+        usernames.get(username).addWorkout(workout);
+    }
+
     public void leaveTeam(String username) {
         // will remove the user with the given username from their team
         if (!users.containsKey(username) || !usernames.containsKey(username)) {
@@ -122,6 +127,21 @@ public class UserManager {
         tempUser.leaveTeam();
     }
 
+    public void getWorkouts(String username){
+        if (username == null || username.isEmpty()) {
+            System.out.println("Username cannot be null or empty");
+        }
+        else if (!users.containsKey(username)) {
+            System.out.println("Username does not exist");
+        }
+        else{
+            ArrayList<Workout> workouts = usernames.get(username).getWorkouts();
+            for (Workout workout : workouts) {
+                System.out.println(workout);
+            }
+        }
+    }
+
     public void viewHistory(String username, String targetName){
         if (username == null || username.isEmpty()) {
             System.out.println("Username cannot be null or empty");
@@ -130,8 +150,10 @@ public class UserManager {
             System.out.println("Username does not exist");
         }
         else{
-            User tempUser = usernames.get(username);
-            tempUser.viewTeamMemberHistory(targetName);
+            ArrayList<Workout> workouts = usernames.get(targetName).getWorkouts();
+            for (Workout workout : workouts) {
+                System.out.println(workout);
+            }
         }
     }
 
@@ -156,8 +178,7 @@ public class UserManager {
             System.out.println("Username does not exist");
         }
         else{
-            User tempUser = usernames.get(username);
-            tempUser.viewChallengeProgress();
+            usernames.get(username).viewChallengeProgress();;
         }
     }
 

@@ -264,7 +264,6 @@ public class User {
 
     public void joinTeam(Teams team_name){
         if(this.team == null){
-            System.out.println(team_name + ":" + this.getCurrentName());
             boolean joinedTeam = team_name.joinTeam(this);
             if(joinedTeam == true){
                 this.team = team_name;
@@ -289,6 +288,9 @@ public class User {
         // WorkoutFactory workout_factory = new WorkoutFactory();
         // Workout workout =  workout_factory.createWorkout(type, intensity);
         this.workouts.add(workout);
+        if(this.team != null){
+            this.team.logWorkout(this, workout);
+        }
     }
     public void notify(String message){
         this.notifications.add(message);
@@ -303,7 +305,7 @@ public class User {
         }
     }
 
-    public void viewTeamMemberHistory(String targetName){
+    public void viewTeamMemberHistory(User targetName){
         this.team.viewHistory(targetName);
     }
     public void issueChallenge(Integer minutes){

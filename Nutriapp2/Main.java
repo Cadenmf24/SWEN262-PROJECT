@@ -254,7 +254,7 @@ public class Main {
         System.out.print("Enter exercise intensity (low, medium, high): ");
         String intensityString = scanner.next();
         Workout workout = featureManager.addExercise(type, intensityString);
-        this.currentUser.addWorkout(workout);
+        this.userManager.addWorkout(currentUser.getCurrentName(), workout);
     }
     public void handleRemoveIngredientFromStock(){
         System.out.print("Search for an ingredient: ");
@@ -356,10 +356,7 @@ public class Main {
     }
 
     private void handleTrackWorkout(){
-        ArrayList<Workout> workoutHistory =  currentUser.getWorkouts();
-        for (Workout workout : workoutHistory) {
-            System.out.println(workout);
-        }
+        userManager.getWorkouts(this.currentUser.getCurrentName());
     }
     private void handleCreateRecipe(){
         System.out.print("Enter recipe name: ");

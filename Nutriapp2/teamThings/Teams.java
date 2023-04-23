@@ -1,5 +1,6 @@
 package teamThings;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,7 +60,6 @@ public class Teams implements TeamOptions{
     public void leaveTeam(User user){
         if(team_members.contains(user)){
             team_members.remove(user);
-            user.leaveTeam(this);
         }
         else{
             System.out.println("How did you even get here? Something went really wrong.");
@@ -75,33 +75,39 @@ public class Teams implements TeamOptions{
     }
 
     @Override
-    public void viewHistory(String targetName) {
-        User tempUser = null;
-        for (User user : team_members) {
-            if(user.getCurrentName() ==targetName){
-                tempUser = user;
-            }
-        }
-        if(tempUser != null){
-            ArrayList<Workout> member_workouts = tempUser.getWorkouts();
-            System.out.println("Workout history for "+ tempUser.getCurrentName() + ":");
+    public void viewHistory(User user) {
+        for (User userCounter : team_members) {
+            if(userCounter.equals(user)){
+            ArrayList<Workout> member_workouts = userCounter.getWorkouts();
+            System.out.println("Workout history for "+ userCounter.getCurrentName() + ":");
             for (Workout workout : member_workouts) {
-                System.out.println(workout.getDate() + ": " + workout.get_minutes() + "minutes");
+                System.out.println(workout);
+            }
+            return;
             }
         }
-        else{
             System.out.println("Target user could not be found");
-        }
     }
 
     @Override
     public void logWorkout(User user, Workout workout) {
         if(this.team_members.contains(user)){
+            if(this.team_workouts.get(user) == null){
+                ArrayList<Workout> new_workouts_list = new ArrayList<>();
+                this.team_workouts.put(user, new_workouts_list);
+            }
             this.team_workouts.get(user).add(workout);
             if(active_challenge == true){
                 Integer minutes = this.challenge_progress.get(user);
-                minutes += workout.get_minutes(); 
+                if(this.challenge_progress.get(user) == null){
+                    challenge_progress.put(user, workout.get_minutes());
+                }
+                else{
+                    Integer new_minutes = minutes + workout.get_minutes();
+                    challenge_progress.put(user, new_minutes);
+                }
             }
+            
             sendNotification(user, workout);
         } 
     }
@@ -127,7 +133,9 @@ public class Teams implements TeamOptions{
 
     @Override
     public void viewRanking() {
-        Map<User, Integer> sorted = this.challenge_progress.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue(Comparator.reverseOrder()))).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-        System.out.println(sorted);
+        for (Map.Entry<User,Integer> entry : challenge_progress.entrySet()) {
+            System.out.println("User = " + entry.getKey() +", minutes = " + entry.getValue());
+        }
+        
     }
 }
