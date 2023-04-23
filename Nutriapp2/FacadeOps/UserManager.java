@@ -160,4 +160,19 @@ public class UserManager {
             tempUser.viewChallengeProgress();
         }
     }
+
+    public void createTeam(String teamname, String username){
+        if (username == null || username.isEmpty()) {
+            System.out.println("Username cannot be null or empty");
+        }
+        else if (!users.containsKey(username)) {
+            System.out.println("Username does not exist");
+        }
+        else{
+            User tempUser = usernames.get(username);
+            Teams team = new Teams(teamname, tempUser);
+            teams.put(teamname, team);
+            tempUser.createTeam(team);
+        }
+    }
 }

@@ -28,6 +28,17 @@ public class Teams implements TeamOptions{
         this.team_workouts = new HashMap<User, ArrayList<Workout>>();
     }
 
+    public Teams(String team_name, User team_creator){
+        this.team_name = team_name;
+        this.team_members = new ArrayList<User>();
+        this.invited_users = new ArrayList<User>();
+        this.challenge_progress = new HashMap<User, Integer>();
+        this.team_workouts = new HashMap<User, ArrayList<Workout>>();
+
+        this.joinTeamBypass(team_creator);
+        
+    }
+
     @Override
     public boolean joinTeam(User user) {
         if(this.invited_users.contains(user)){
@@ -38,6 +49,10 @@ public class Teams implements TeamOptions{
         else{
             return false;
         }
+    }
+
+    public void joinTeamBypass(User user){
+        this.team_members.add(user);
     }
 
     @Override

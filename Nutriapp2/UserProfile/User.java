@@ -251,8 +251,15 @@ public class User {
     public void removeTeamMember(User teamMember) {
     }
 
+    public void createTeam(Teams team_name){
+        this.team = team_name;
+        team_name.joinTeamBypass(this);
+        System.out.println("Team successfully created");
+    }
+
     public void joinTeam(Teams team_name){
         if(this.team == null){
+            System.out.println(team_name + ":" + this.getCurrentName());
             boolean joinedTeam = team_name.joinTeam(this);
             if(joinedTeam == true){
                 this.team = team_name;

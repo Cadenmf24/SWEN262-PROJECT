@@ -122,7 +122,8 @@ public class Main {
         System.out.println("16. View Workouts of Team Member");
         System.out.println("17. Issue Team Challenge");
         System.out.println("18. View Challenge Ranking");
-        System.out.println("19. Quit");
+        System.out.println("19. Create a team");
+        System.out.println("20. Quit");
         int choice = scanner.nextInt();
         scanner.nextLine();
         switch (choice) {
@@ -178,11 +179,17 @@ public class Main {
                 break;
             case 16:
                 handleViewWorkoutHistory();
+                break;
             case 17:
                 handleIssueChallenge();
+                break;
             case 18:
                 handleViewChallengeProgress();
+                break;
             case 19:
+                handleCreateTeam();
+                break;
+            case 20:
                 System.out.println("Goodbye!");
                 System.exit(0);
                 break;
@@ -251,6 +258,12 @@ public class Main {
 
     private void handleViewChallengeProgress(){
         userManager.viewChallengeProgress(this.currentUser.getCurrentName());
+    }
+
+    private void handleCreateTeam(){
+        System.out.println("Please enter desired team name:");
+        String teamName = scanner.nextLine();
+        userManager.createTeam(teamName, this.currentUser.getCurrentName());
     }
     
 }
