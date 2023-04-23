@@ -1,7 +1,5 @@
 package food;
 
-import ShoppingCart.IngredientElement;
-import ShoppingCart.ShoppingCartVisitor;
 
 /**
  * child class of Food that defines state and behavior for an ingredient, acts
@@ -9,26 +7,13 @@ import ShoppingCart.ShoppingCartVisitor;
  * 
  * @author Jackson Shortell
  */
-public class Ingredient extends Food implements IngredientElement{
+public class Ingredient extends Food {
 
-    public Ingredient(String name, int calories, int fat, int protein, int fiber, int carbs) {
-        super(name, calories, fat, protein, fiber, carbs);
+    public Ingredient(int id, String name, int calories, int fat, int protein, int fiber, int carbs) {
+        super(id, name, calories, fat, protein, fiber, carbs);
     }
 
-    @Override
-    public int accept(ShoppingCartVisitor visitor) {
-        return visitor.visit(this);
-    }
-
-    public String getUnit() {
-        return null;
-    }
-
-    public double getPricePerUnit() {
-        return 0;
-    }
-
-    public Double getBaseAmount() {
-        return null;
+    public Ingredient() {
+        super();
     }
 }

@@ -12,9 +12,12 @@ public class Meal extends Food {
 
     private ArrayList<Recipe> recipes;
 
-    public Meal(String name) {
-        super(name, 0, 0, 0, 0, 0);
+    public Meal(int id, String name) {
+        super(id, name, 0, 0, 0, 0, 0);
         recipes = new ArrayList<>();
+    }
+
+    public Meal() {
     }
 
     public ArrayList<Recipe> getRecipes() {

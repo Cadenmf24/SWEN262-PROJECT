@@ -7,9 +7,7 @@ public interface GoalState{
 
     public String toString();
 
-    public void handleWeightGain();
-
-    public void handleWeightLoss();
+    public GoalState update(int userWeight, int targetWeight);
 
 
 }

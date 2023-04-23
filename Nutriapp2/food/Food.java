@@ -8,6 +8,8 @@ package food;
  */
 public abstract class Food {
 
+    protected int id;
+
     protected String name;
 
     protected int calories;
@@ -23,13 +25,20 @@ public abstract class Food {
 
     protected int carbs;
 
-    public Food(String name, int calories, int fat, int protein, int fiber, int carbs) {
+    public Food(int id, String name, int calories, int fat, int protein, int fiber, int carbs) {
         this.name = name;
         this.calories = calories;
         this.fat = fat;
         this.protein = protein;
         this.fiber = fiber;
         this.carbs = carbs;
+    }
+
+    public Food() {
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

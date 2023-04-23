@@ -18,10 +18,14 @@ public class Recipe extends Food {
      */
     private HashMap<Ingredient, Integer> ingredients;
 
-    public Recipe(String name, String instructions) {
-        super(name, 0, 0, 0, 0, 0);
+    public Recipe(int id, String name, String instructions) {
+        super(id, name, 0, 0, 0, 0, 0);
         instructions = this.instructions;
         ingredients = new HashMap<>();
+    }
+
+    public Recipe() {
+        super();
     }
 
     public HashMap<Ingredient, Integer> getIngredients() {

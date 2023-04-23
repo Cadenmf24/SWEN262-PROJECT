@@ -18,17 +18,6 @@ public interface UserDAO {
     User[] getUsers() throws IOException;
 
     /**
-     * Finds all Users whose name contains the given text
-     * 
-     * @param containsText The text to match against
-     * 
-     * @return An array of  User  whose nemes contains the given text, may be empty
-     * 
-     * @throws IOException if an issue with underlying storage
-     */
-    User[] findUsers(String containsText) throws IOException;
-
-    /**
      * Retrieves a  User with the given id
      * 
      * @param id The id of the  User to get

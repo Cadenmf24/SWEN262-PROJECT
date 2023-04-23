@@ -140,12 +140,6 @@ public class UserFileDAO implements UserDAO {
 
     }
 
-    public User[] findUsers(String containsText) {
-
-        return getUsersArray(containsText);
-
-    }
-
     public User getUser(int id) {
 
         if (users.containsKey(id))
