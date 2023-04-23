@@ -9,6 +9,8 @@ import com.opencsv.exceptions.CsvValidationException;
 import Database.CSVDataImporter;
 import Workout.Workout;
 import teamThings.Teams;
+import food.Ingredient;
+import food.Recipe;
 //import Database.Database;
 import FacadeOps.*;
 import GuestMode.IngredientManager;
@@ -16,6 +18,7 @@ import State.Goal;
 import State.GoalState;
 import UserProfile.User;
 import Notifications.*;
+
 
 public class Main {
     private User currentUser;
