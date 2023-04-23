@@ -53,40 +53,17 @@ public class FeatureManager {
         
     }
 
-    public void addIngredientToStock() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Search for an ingredient: ");
-        String query = scanner.nextLine();
-        Ingredient ingredient = findIngredientByName(ingredientManager.getIngredients(), query);
-        if (ingredient == null) {
-            System.out.println("No results found.");
-        } else {
-            System.out.print("Enter quantity: ");
-            double quantity = scanner.nextDouble();
-            
-            Command addCommand = new AddIngredientCommand(ingredient, (int) quantity);
-            addCommand.execute();
-            user.addIngredientToStock(ingredient, quantity);
-        }
-        scanner.close();
+    public void addIngredientToStock(Ingredient ingredient, int quantity) {
+        Command addCommand = new AddIngredientCommand(ingredient, quantity);
+        addCommand.execute();
+        user.addIngredientToStock(ingredient, quantity);
+        
     }
 
-    public void RemoveIngredientToStock() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Search for an ingredient: ");
-        String query = scanner.nextLine();
-        Ingredient ingredient = findIngredientByName(ingredientManager.getIngredients(), query);
-        if (ingredient == null) {
-            System.out.println("No results found.");
-        } else {
-            System.out.print("Enter quantity: ");
-            double quantity = scanner.nextDouble();
-            
-            Command addCommand = new AddIngredientCommand(ingredient, (int) quantity);
-            addCommand.undo();
-            user.addIngredientToStock(ingredient, quantity);
-        }
-        scanner.close();
+    public void RemoveIngredientToStock(Ingredient ingredient, int quantity) {
+        Command addCommand = new AddIngredientCommand(ingredient, quantity);
+        addCommand.undo();
+        user.addIngredientToStock(ingredient, quantity);
     }
     public void createRecipe() {
         Scanner scanner = new Scanner(System.in);
@@ -183,39 +160,9 @@ public class FeatureManager {
         scanner.close();
         System.out.println("Shopping list generated: " + shoppingList);
     }
-    public void trackWorkouts() {
-        // Scanner scanner = new Scanner(System.in);
-        // System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
-        // String type = scanner.nextLine();
-        // //System.out.print("Enter the duration in minutes: ");
-        // //int duration = scanner.nextInt();
-        // System.out.print("Enter exercise intensity (low, medium, high): ");
-        // String intensity = scanner.nextLine(); //valueOf(scanner.next().toUpperCase());
-        // scanner.close();
-        // System.out.println("Exercise added to log.");
-        
-    }
     
     public void suggestExercise() {
         
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a target calories amount: ");
-        int target = scanner.nextInt();
-        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
-        String goalString = scanner.nextLine();
-        System.out.print("Enter exercise intensity (low, medium, high): ");
-        String intense = scanner.nextLine();
-        user.setTargetCalories(target);
-        int excessCalories = (int) (user.updateTargetCaloriesPerDay(goalString) - user.getTargetCalories());
-        if (excessCalories > 0) {
-
-            int exerciseDuration = (int) Math.ceil(excessCalories / user.getCaloriesBurned(intense));
-            System.out.printf("You have exceeded your daily calorie target by %d calories. "
-                    + "Consider doing %d minutes of exercise to burn them off.%n", excessCalories, exerciseDuration);
-        } else {
-            System.out.println("You have not exceeded your daily calorie target.");
-        }
-        scanner.close();
     }
     
     public void browseHistory() {
@@ -224,14 +171,6 @@ public class FeatureManager {
         System.out.println("All User History Has been Returned");
     }
     
-    public void saveDailyActivity() {
-        Scanner scanner = new Scanner(System.in);
-        historyManager.addEntry(user.getCurrentWeight(), (String) exerciseLog.getExercises());
-        System.out.print("Enter your current weight: ");
-        double weight = scanner.nextDouble();
-        user.setWeight(weight);
-        scanner.close();
-    }
 
     public Ingredient findIngredientByName(List<Ingredient> ingredients, String name) {
         for (Ingredient ingredient : ingredients) {

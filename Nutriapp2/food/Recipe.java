@@ -73,4 +73,9 @@ public class Recipe extends Food {
         protein -= ingredient.getProtein() * quantity;
         carbs -= ingredient.getCarbs() * quantity;
     }
+    public String toString(){
+        System.out.print(ingredients);
+        //return ingredients;
+        return " Name: " + name + " Instructions: " + instructions;
+    }
 }

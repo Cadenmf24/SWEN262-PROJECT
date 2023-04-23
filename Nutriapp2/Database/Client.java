@@ -1,9 +1,11 @@
 package Database;
 
+import java.io.IOException;
+
 import com.opencsv.exceptions.CsvValidationException;
 
 public class Client {
-    public static void main(String[] args) throws CsvValidationException {
+    public static void main(String[] args) throws CsvValidationException, IOException {
 
         //CSV
 

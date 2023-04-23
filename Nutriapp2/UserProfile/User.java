@@ -110,6 +110,7 @@ public class User {
         }
     }
     public String getCurrentName(){
+        System.out.print(name);
         return name;
     }
     public int getCurrentHeight(){

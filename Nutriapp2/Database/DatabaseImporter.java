@@ -1,7 +1,9 @@
 package Database;
 
-import com.opencsv.exceptions.CsvValidationException;
+import java.io.IOException;
+
+//import com.opencsv.exceptions.CsvValidationException;
 
 public interface DatabaseImporter {
-    void importData(String fileName) throws CsvValidationException;
+    void importData(String fileName) throws IOException;
 }

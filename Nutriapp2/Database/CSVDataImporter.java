@@ -1,56 +1,78 @@
 package Database;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 //Having trouble refering to the ingredient manager in guest so that each sting line is added to the list<String> ingredients
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
-import com.opencsv.exceptions.CsvValidationException;
+//import com.opencsv.CSVReader;
+//import com.opencsv.CSVWriter;
+//import com.opencsv.exceptions.CsvValidationException;
 
 import GuestMode.IngredientManager;
+import food.Food;
 import food.Ingredient;
 
 public class CSVDataImporter implements DatabaseImporter{
+    List<Ingredient> ingredients = new ArrayList<>();
     @Override
-    public void importData(String fileName) throws CsvValidationException {
-        String updatedcsvFile = "Nutriapp2/Database/data.csv";
-
-        List<Integer> columnsToKeep = new ArrayList<>();
-        columnsToKeep.add(0);  // Keep column NDB_No (id)
-        columnsToKeep.add(1);  // Keep column Shrt_Desc (name)
-        columnsToKeep.add(3);  // Keep column Energ_Kcal (calories)
-        columnsToKeep.add(4);  // Keep column Protein_(g) (protein)
-        columnsToKeep.add(5);  // Keep column Lipid_Tot_(g) (fat)
-        columnsToKeep.add(7);  // Keep column Carbohydrt_(g) (carbs)
-        columnsToKeep.add(8);  // Keep column Fiber_TD_(g) (fiber)
+    public void importData(String fileName) throws IOException{
+        String filerString = fileName;
+        String exportedDatafile = "Nutriapp2/file.csv";
+        String delimiter = ",";
+        boolean isFirstLine = true;
+        int[] columnstoKeep = {1,3,4,5,7,8};
+        int numRowsToRead = 25; 
         
-        try (CSVReader reader = new CSVReader(new FileReader(fileName));
-                CSVWriter writer = new CSVWriter(new FileWriter(updatedcsvFile))) {
-            String[] nextLine;
-            while ((nextLine = reader.readNext()) != null) {
-                String[] trimmedLine = trimLine(nextLine, columnsToKeep);
-                writer.writeNext(trimmedLine);
+        System.out.print("Declared the columns that will be kept\n");
+
+        //read given csv file and store the specified selected data in the list
+        List<String[]> selectedData = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filerString))) {
+            String line = "";
+            int count = 0;
+            System.out.print("reading data and adding to selectedData\n");
+            while ((line = reader.readLine()) != null) {
+                if (isFirstLine) { // Skip the first line
+                    isFirstLine = false;
+                    continue;
+                }
+                count++;
+                if (count > numRowsToRead) {
+                    break; // Exit the loop if we've read the desired number of rows
+                }
+                String[] fields = line.split(delimiter);//(delimiter + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                List<String> selectedFields = new ArrayList<>();
+                String name = fields[1];
+                double calories = Double.parseDouble(fields[3]);
+                double protein  = Double.parseDouble(fields[4]);
+                double fat = Double.parseDouble(fields[5]);
+                double carbs = Double.parseDouble(fields[7]);
+                double fiber = Double.parseDouble(fields[8]);
+                Ingredient ingredient = new Ingredient(name, (int) calories, (int)protein, (int) fat, (int) carbs, (int) fiber);
+                for (int i : columnstoKeep) {
+                    selectedFields.add(fields[i]);//.replaceAll("^\"|\"$", ""));
+                }
+                ingredients.add(ingredient);
+                
+                //System.out.print(ingredient.getName()+"\n");
+                //IngredientManager Manager = new IngredientManager(ingredients);
+                //Manager.addIngredient(ingredient);
+                //Manager.getIngredients();
+                
+                selectedData.add(selectedFields.toArray(new String[0]));
             }
-            
-            // Close the CSV reader and CSV writer
-            reader.close();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        // Writng into the output file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(exportedDatafile))) {
+            //System.out.print("for loop begins\n");
+            for (String[] row : selectedData) {
+                String lineToWrite = String.join(delimiter, row);
+                writer.write(lineToWrite);
+                writer.newLine();
+            }
         }
     }
-    private static String[] trimLine(String[] line, List<Integer> columnsToKeep) {
-        String[] trimmedLine = new String[columnsToKeep.size()];
-        for (int i = 0; i < columnsToKeep.size(); i++) {
-            int columnIndex = columnsToKeep.get(i);
-            trimmedLine[i] = line[columnIndex];
-            Ingredient ingredient = IngredientConverter.convertStringToIngredient(trimmedLine[i]);
-            List<Ingredient> list = new ArrayList<Ingredient>();
-            IngredientManager Manager = new IngredientManager(list);
-            Manager.addIngredient(ingredient);
-        }
-        return trimmedLine;
+    public List<Ingredient> getData(){
+        return ingredients;
     }
 }
