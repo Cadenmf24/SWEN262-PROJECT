@@ -51,7 +51,7 @@ public class GainWeightWorkout implements Workout{
     
     @Override
     public String toString() {
-        return minutes + " minute workout on " + date;
+        return "GainWeight Workout for " + minutes + " minute with " + intensity + "workout on " + date;
     }
     
 }
