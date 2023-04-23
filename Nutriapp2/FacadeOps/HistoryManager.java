@@ -5,12 +5,12 @@ import java.util.List;
 
 import Workout.Workout;
 
-public class HistoryManager {
+public class HistoryManager{
 
     List<Pair> history = new ArrayList<>();
 
-    public HistoryManager(List<Pair> history) {
-        this.history = history;
+    public HistoryManager() {
+        //this.history = history;
     }
     public void addEntry(double currentWeight, ArrayList<Workout> exercises) {
         history.add(new Pair(currentWeight, exercises));
