@@ -1,12 +1,16 @@
 package FacadeOps;
 
+import java.util.ArrayList;
+
+import Workout.Workout;
+
 public class Pair {
     private Double doubleValue;
-    private String stringValue;
+    private ArrayList<Workout> stringValue;
 
-    public Pair(Double doubleValue, String stringValue) {
+    public Pair(Double doubleValue, ArrayList<Workout> exercises) {
         this.doubleValue = doubleValue;
-        this.stringValue = stringValue;
+        this.stringValue = exercises;
     }
 
     public Double getDoubleValue() {
@@ -17,11 +21,11 @@ public class Pair {
         this.doubleValue = doubleValue;
     }
 
-    public String getStringValue() {
+    public ArrayList<Workout> getStringValue() {
         return stringValue;
     }
 
-    public void setStringValue(String stringValue) {
+    public void setStringValue(ArrayList<Workout> stringValue) {
         this.stringValue = stringValue;
     }
 }

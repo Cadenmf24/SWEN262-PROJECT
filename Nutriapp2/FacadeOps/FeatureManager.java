@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 import Command.AddIngredientCommand;
 import Command.Command;
+import State.*;
 //import Command.HistoryCommand;
 import State.Goal;
 import State.GoalState;
@@ -23,9 +24,9 @@ public class FeatureManager {
     //private Database database;
     private HistoryManager historyManager = new HistoryManager(null);
     private RecipeManager recipeManager;
-    private ExerciseLog exerciseLog;
     public IngredientManager ingredientManager = new IngredientManager(null);
-
+    GoalState state;
+    
     public FeatureManager() {
         this.user = new User(null, 0, 0, null);
     }
@@ -33,96 +34,51 @@ public class FeatureManager {
         // Gives authenticated users access to all features of the current system
     
     }
-    public void enterWeight() {
-        User tracker = new User(null, 0, 0, null);
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter weight: ");
-            double weight = scanner.nextDouble();
-            scanner.nextLine(); // consume the newline character
-
-            tracker.addWeight(weight);
-            tracker.getPreviousWeight();
-            scanner.close();
-        }
-        
-    }
-    public void enterUserStats() throws ParseException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter your height in inches: ");
-        int height = scanner.nextInt();
-        System.out.print("Enter your weight in pounds: ");
-        int weight = scanner.nextInt();
-        System.out.print("Enter your birthdate in yyyy-MM-dd format: ");
-        String birthdate = scanner.next();
+    public Date formatDateStringtoDate(String birthdate) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse(birthdate);
-        user.setName(name);
-        user.setHeight(height);
-        user.setWeight(weight);
-        user.setBirthdate(date);
-        scanner.close();
+        return date;
     }
     public void setGoal() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
         String goalString = scanner.nextLine();
-        GoalState state = new MaintainWeight();
+        switch(goalString)
+        {
+            case "GainWeight":
+            state = new GainWeight();
+            break;
+            case "LoseWeight":
+            state = new LoseWeight();
+            break;
+            case "MaintainWeight":
+            state = new MaintainWeight();
+            break;
+            default:
+            state = new MaintainWeight();
+        }
         Goal goalType = new Goal();
         goalType.setGoalType(state);
         System.out.println(goalType.toString());
         user.setGoal(goalString);
-        scanner.close();
     }
-    public void addExercise() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
-        String type = scanner.nextLine();
-        //System.out.print("Enter exercise duration in minutes: ");
-        //int duration = scanner.nextInt();
-        System.out.print("Enter exercise intensity (low, medium, high): ");
-        String intensityString = scanner.next();
+    public Workout addExercise(String type, String intensityString) {
         WorkoutFactory wkt = new WorkoutFactory();
-        wkt.createWorkout(type, intensityString);
-        scanner.close();
-    }
-    public void addIngredientToStock() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Search for an ingredient: ");
-        String query = scanner.nextLine();
-        Ingredient ingredient = findIngredientByName(ingredientManager.getIngredients(), query);
-        if (ingredient == null) {
-            System.out.println("No results found.");
-        } else {
-            System.out.print("Enter quantity: ");
-            double quantity = scanner.nextDouble();
-            
-            Command addCommand = new AddIngredientCommand(ingredient, (int) quantity);
-            addCommand.execute();
-            user.addIngredientToStock(ingredient, quantity);
-        }
-        scanner.close();
+        return wkt.createWorkout(type, intensityString);
+        
     }
 
-    public void RemoveIngredientToStock() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Search for an ingredient: ");
-        String query = scanner.nextLine();
-        Ingredient ingredient = findIngredientByName(ingredientManager.getIngredients(), query);
-        if (ingredient == null) {
-            System.out.println("No results found.");
-        } else {
-            System.out.print("Enter quantity: ");
-            double quantity = scanner.nextDouble();
-            
-            Command addCommand = new AddIngredientCommand(ingredient, (int) quantity);
-            addCommand.undo();
-            user.addIngredientToStock(ingredient, quantity);
-        }
-        scanner.close();
+    public void addIngredientToStock(Ingredient ingredient, int quantity) {
+        Command addCommand = new AddIngredientCommand(ingredient, quantity);
+        addCommand.execute();
+        user.addIngredientToStock(ingredient, quantity);
+        
+    }
+
+    public void RemoveIngredientToStock(Ingredient ingredient, int quantity) {
+        Command addCommand = new AddIngredientCommand(ingredient, quantity);
+        addCommand.undo();
+        user.addIngredientToStock(ingredient, quantity);
     }
     public void createRecipe() {
         Scanner scanner = new Scanner(System.in);
@@ -219,41 +175,9 @@ public class FeatureManager {
         scanner.close();
         System.out.println("Shopping list generated: " + shoppingList);
     }
-    public void trackWorkouts() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
-        String type = scanner.nextLine();
-        //System.out.print("Enter the duration in minutes: ");
-        //int duration = scanner.nextInt();
-        System.out.print("Enter exercise intensity (low, medium, high): ");
-        String intensity = scanner.nextLine(); //valueOf(scanner.next().toUpperCase());
-        WorkoutFactory wkt = new WorkoutFactory();
-        wkt.createWorkout(type, intensity);
-        exerciseLog.addExercise(wkt);
-        scanner.close();
-        System.out.println("Exercise added to log.");
-    }
     
     public void suggestExercise() {
         
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a target calories amount: ");
-        int target = scanner.nextInt();
-        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
-        String goalString = scanner.nextLine();
-        System.out.print("Enter exercise intensity (low, medium, high): ");
-        String intense = scanner.nextLine();
-        user.setTargetCalories(target);
-        int excessCalories = (int) (user.updateTargetCaloriesPerDay(goalString) - user.getTargetCalories());
-        if (excessCalories > 0) {
-
-            int exerciseDuration = (int) Math.ceil(excessCalories / user.getCaloriesBurned(intense));
-            System.out.printf("You have exceeded your daily calorie target by %d calories. "
-                    + "Consider doing %d minutes of exercise to burn them off.%n", excessCalories, exerciseDuration);
-        } else {
-            System.out.println("You have not exceeded your daily calorie target.");
-        }
-        scanner.close();
     }
     
     public void browseHistory() {
@@ -262,14 +186,6 @@ public class FeatureManager {
         System.out.println("All User History Has been Returned");
     }
     
-    public void saveDailyActivity() {
-        Scanner scanner = new Scanner(System.in);
-        historyManager.addEntry(user.getCurrentWeight(), (String) exerciseLog.getExercises());
-        System.out.print("Enter your current weight: ");
-        double weight = scanner.nextDouble();
-        user.setWeight(weight);
-        scanner.close();
-    }
 
     public Ingredient findIngredientByName(List<Ingredient> ingredients, String name) {
         for (Ingredient ingredient : ingredients) {

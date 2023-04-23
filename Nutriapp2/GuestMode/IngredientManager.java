@@ -14,7 +14,7 @@ public class IngredientManager implements Inventory{
 
     @Override
     public List<Ingredient> getIngredients() {
-        //System.out.println(ingredients);
+        //System.out.println(ingredients + );
         return ingredients;
     }
 

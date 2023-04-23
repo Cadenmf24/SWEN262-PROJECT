@@ -79,6 +79,10 @@ public class User {
         command.execute();
         undoStack.push(command);
     }
+
+    public void changeGoal(String state){
+        this.goal = state;
+    }
     public void setName(String name){
         this.name = name;
     }
@@ -110,6 +114,7 @@ public class User {
         }
     }
     public String getCurrentName(){
+        System.out.print(name);
         return name;
     }
     public int getCurrentHeight(){
@@ -280,9 +285,9 @@ public class User {
             this.team = null;
         }
     }
-    public void addWorkout(String type, String intensity){
-        WorkoutFactory workout_factory = new WorkoutFactory();
-        Workout workout =  workout_factory.createWorkout(type, intensity);
+    public void addWorkout(Workout workout){
+        // WorkoutFactory workout_factory = new WorkoutFactory();
+        // Workout workout =  workout_factory.createWorkout(type, intensity);
         this.workouts.add(workout);
     }
     public void notify(String message){

@@ -3,6 +3,8 @@ package FacadeOps;
 import java.util.ArrayList;
 import java.util.List;
 
+import Workout.Workout;
+
 public class HistoryManager {
 
     List<Pair> history = new ArrayList<>();
@@ -10,7 +12,7 @@ public class HistoryManager {
     public HistoryManager(List<Pair> history) {
         this.history = history;
     }
-    public void addEntry(double currentWeight, String exercises) {
+    public void addEntry(double currentWeight, ArrayList<Workout> exercises) {
         history.add(new Pair(currentWeight, exercises));
     }
     public List<Pair> getHistory(){

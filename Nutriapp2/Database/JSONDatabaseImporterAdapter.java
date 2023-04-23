@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.opencsv.exceptions.CsvValidationException;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -29,7 +28,7 @@ public class JSONDatabaseImporterAdapter implements DatabaseImporterAdapter{
         // Use the CSVDataImporter to import the data
         try {
             dataImporter.importData(csvFileName);
-        } catch (CsvValidationException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

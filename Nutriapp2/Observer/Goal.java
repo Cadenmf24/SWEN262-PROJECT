@@ -1,4 +1,4 @@
-package Observer;
+package  Observer;
 
 public class Goal implements UserListener{
 

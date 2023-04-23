@@ -31,4 +31,7 @@ public class Ingredient extends Food implements IngredientElement{
     public Double getBaseAmount() {
         return null;
     }
+    public String toString(){
+        return "Name: " + name + " Calories: " + calories + " Fat: " + fat + " Protein: " + protein + " Fiber: " + fiber + " Carbs: " + carbs;
+    }
 }

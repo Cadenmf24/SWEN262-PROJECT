@@ -59,6 +59,7 @@ public class Teams implements TeamOptions{
     public void leaveTeam(User user){
         if(team_members.contains(user)){
             team_members.remove(user);
+            user.leaveTeam(this);
         }
         else{
             System.out.println("How did you even get here? Something went really wrong.");

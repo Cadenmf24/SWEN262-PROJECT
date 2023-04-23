@@ -1,4 +1,4 @@
-package Observer;
+package  Observer;
 
 public class UserEvent {
     private int weight, caloriesEaten; 

@@ -1,20 +1,21 @@
 import java.io.*;
 import java.text.ParseException;
+// import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Scanner;
 
 import com.opencsv.exceptions.CsvValidationException;
 
+import Command.AddIngredientCommand;
+import Command.Command;
 import Database.CSVDataImporter;
+import Workout.Workout;
+import food.Ingredient;
+import food.Recipe;
 //import Database.Database;
-import FacadeOps.CommandManager;
-import FacadeOps.FeatureManager;
-import FacadeOps.RecipeManager;
-import FacadeOps.SessionManager;
-import FacadeOps.HistoryManager;
-import FacadeOps.Pair;
-import FacadeOps.UserManager;
-import GuestMode.IngredientManager;
+import FacadeOps.*;
+import State.Goal;
+import State.GoalState;
 import UserProfile.User;
 
 public class Main {
@@ -24,15 +25,16 @@ public class Main {
     public UserManager userManager = new UserManager();
     public FeatureManager featureManager = new FeatureManager();
     public RecipeManager recipeManager = new RecipeManager();
-    //public List<Pair> list = new Pair(null, null);
-    public HistoryManager historyManager = new HistoryManager(null);
+    public List<Pair> list;
+    public HistoryManager historyManager = new HistoryManager(list);
     public CommandManager commandManager = new CommandManager();
-    public IngredientManager ingredientManager = new IngredientManager(null);
-
+    static List<Ingredient> ingredientsList = new ArrayList<>();
     public static void main(String[] args) throws IOException, CsvValidationException{
         Main tracker = new Main();
         CSVDataImporter csvDataImporter = new CSVDataImporter(); // Create the Adaptee object
-        csvDataImporter.importData("ingredients.csv"); // Call the importData method on the Adapter
+        System.out.print("DataImporter about to be called\n");
+        csvDataImporter.importData("NutriApp2/Database/ingredients.csv"); // Call the importData method on the Adapter
+        ingredientsList = csvDataImporter.getData();
         tracker.run();
     }
     public void run() {
@@ -100,7 +102,11 @@ public class Main {
         }
         System.out.println("Registration successful!");
     }
-
+    
+    private void handleBrowseStock() {
+        System.out.println("Welcome! Here are some of our ingredients available in stock");
+        System.out.print(ingredientsList + "\n");
+    }
     private void handleUserMode() {
         System.out.println("Welcome, " + currentUser.getCurrentName()+ " to the Diet Tracker app. What would you like to do?");
 
@@ -147,35 +153,31 @@ public class Main {
                 currentUser = null;
                 break;
             case 7:
-                featureManager.enterWeight();;
+                handleEnterWeight();
                 break;
             case 8:
-                try {
-                    featureManager.enterUserStats();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                };
+                handleEnterUserStats();
                 break;
             case 9:
                 featureManager.setGoal();
                 break;
             case 10:
-                featureManager.addExercise();
+                handleWorkout();
                 break;
             case 11:
-                featureManager.addIngredientToStock();
+                handleAddIngredientToStock();
                 break;
             case 12:
                 featureManager.createRecipe();
                 break;
             case 13:
-                featureManager.trackWorkouts();
+                handleTrackWorkout();
                 break;
             case 14:
-                featureManager.suggestExercise();
+                handleBrowseHistory();
                 break;
             case 15:
-                featureManager.saveDailyActivity();
+                handleSaveDailyActivity();;
                 break;
             case 16:
                 handleViewWorkoutHistory();
@@ -206,16 +208,103 @@ public class Main {
             sessionManager.logout(sessionManager.generateSessionKey(username));
         } catch (Exception e) {
             e.printStackTrace();
+        }           
+    }//test fails need to update code in a way that can add the String goal chosen my the useer as their goal's current state
+    // public void handleUserSetGoal(){
+    //     System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
+    //     String goalString = scanner.nextLine();
+    //     Goal state = new Goal();
+    //     Goal goalType = new Goal();
+    //     goalType.setGoalType((GoalState) state);
+    //     System.out.println(goalType.toString());
+    //     currentUser.setGoal(goalString);
+    // }
+    public void handleEnterWeight(){
+        System.out.print("Enter weight: ");
+        double weight = scanner.nextDouble();
+        scanner.nextLine();
+        currentUser.addWeight(weight);
+        currentUser.getPreviousWeight();
+    }
+    public void handleEnterUserStats(){
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter your height in inches: ");
+        int height = scanner.nextInt();
+        System.out.print("Enter your weight in pounds: ");
+        int weight = scanner.nextInt();
+        System.out.print("Enter your birthdate in yyyy-MM-dd format: ");
+        String birthdate = scanner.next();
+        try {
+            
+            System.out.print("String birthdate was passed through, about to convert\n");
+            Date date = featureManager.formatDateStringtoDate(birthdate);
+            currentUser.setName(name);
+            currentUser.setHeight(height);
+            currentUser.setWeight(weight);
+            currentUser.setBirthdate(date);
+            System.out.printf("Username: ", currentUser.getCurrentName(), " Age: ", currentUser.calculateAge(), " Weight: ", currentUser.getCurrentWeight());
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-                
+    }
+    public void handleWorkout(){
+        System.out.print("Enter exercise type(Valid Commands: LoseWeight, GainWeight, MaintainWeigth): ");
+        String type = scanner.nextLine();
+        System.out.print("Enter exercise intensity (low, medium, high): ");
+        String intensityString = scanner.next();
+        Workout workout = featureManager.addExercise(type, intensityString);
+        this.currentUser.addWorkout(workout);
+    }
+    public void handleRemoveIngredientFromStock(){
+        System.out.print("Search for an ingredient: ");
+        String query = scanner.nextLine();
+        Ingredient ingredient = featureManager.findIngredientByName(ingredientsList, query);
+        if (ingredient == null) {
+            System.out.println("No results found.");
+        } else {
+            System.out.print("Enter quantity: ");
+            double quantity = scanner.nextDouble();
+            currentUser.deductIngredientsFromStock(ingredient, quantity);
+        }
     }
     private void handleLeaveTeam() {
         userManager.leaveTeam(this.currentUser.getCurrentName());
         System.out.println("Ties have been cut!");
     }
-    private void handleBrowseStock() {
-        System.out.println("Welcome! Here are some of our ingredients available in stock");
-        ingredientManager.getIngredients();
+    public void handleAddIngredientToStock(){
+        System.out.print("Search for an ingredient: ");
+        String query = scanner.nextLine();
+        Ingredient ingredient = featureManager.findIngredientByName(ingredientsList, query);
+        if (ingredient == null) {
+            System.out.println("No results found.");
+        } else {
+            System.out.print("Enter quantity: ");
+            int quantity = scanner.nextInt();
+            //featureManager.addIngredientToStock(ingredient, quantity);
+            Command addCommand = new AddIngredientCommand(ingredient, quantity);
+            addCommand.execute();
+            currentUser.addIngredientToStock(ingredient, quantity);
+        }
+        
+    }
+    private void handleSuggestWorkout(){
+        System.out.print("Enter a target calories amount: ");
+        int target = scanner.nextInt();
+        System.out.println("Choose a goal (Options: GainWeight, LoseWeight, or MaintainWeight):");
+        String goalString = scanner.nextLine();
+        System.out.print("Enter exercise intensity (low, medium, high): ");
+        String intense = scanner.nextLine();
+        currentUser.setTargetCalories(target);
+        int excessCalories = (int) (currentUser.updateTargetCaloriesPerDay(goalString) - currentUser.getTargetCalories());
+        if (excessCalories > 0) {
+
+            int exerciseDuration = (int) Math.ceil(excessCalories / currentUser.getCaloriesBurned(intense));
+            System.out.printf("You have exceeded your daily calorie target by %d calories. "
+                    + "Consider doing %d minutes of exercise to burn them off.%n", excessCalories, exerciseDuration);
+        } else {
+            System.out.println("You have not exceeded your daily calorie target.");
+        }
     }
 
     private void handleChangePassword() {
@@ -265,5 +354,49 @@ public class Main {
         String teamName = scanner.nextLine();
         userManager.createTeam(teamName, this.currentUser.getCurrentName());
     }
+
+    private void handleTrackWorkout(){
+        ArrayList<Workout> workoutHistory =  currentUser.getWorkouts();
+        for (Workout workout : workoutHistory) {
+            System.out.println(workout);
+        }
+    }
+    private void handleCreateRecipe(){
+        System.out.print("Enter recipe name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter your Instructions: ");
+        String instructions = scanner.nextLine();
+        Recipe recipe = new Recipe(name, instructions);
+        recipe.setInstructions(instructions);
+        recipe.setName(name);
+        boolean addMoreIngredients = true;
+        while (addMoreIngredients) {
+            System.out.print("Search for an ingredient: ");
+            String query = scanner.nextLine();
+            Ingredient ingredient = featureManager.findIngredientByName(ingredientsList, query);
+            if (ingredient == null) {
+                System.out.println("No results found.");
+            } else {
+                System.out.print("Enter quantity: ");
+                int quantity = scanner.nextInt();
+                recipe.addIngredient(ingredient, quantity);
+            }
+            System.out.print("Add another ingredient? (y/n): ");
+            String addMoreIngredientsString = scanner.next();
+            addMoreIngredients = addMoreIngredientsString.equalsIgnoreCase("y");
+            //scanner.nextLine();
+        }
+    }
+    private void handleSaveDailyActivity(){
+        historyManager.addEntry(currentUser.getCurrentWeight(), currentUser.getWorkouts());
+        System.out.print("Enter your current weight: ");
+        double weight = scanner.nextDouble();
+        currentUser.setWeight(weight);
+    }
+    private void handleBrowseHistory(){
+        System.out.println("Personal History:");
+        historyManager.getHistory();  //fix
+        System.out.println("All User History Has been Returned");
     
+    }
 }

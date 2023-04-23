@@ -1,4 +1,4 @@
-package Observer;
+package  Observer;
 
 public interface Component {
     void register(Goal g);
